@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+        <script type="text/javascript" src="turtle.js"></script>
+        <script type="text/javascript" src="parser.js"></script>
+        <script type="text/javascript" src="logo.js"></script>
+
+
+        <script type="text/javascript">
+            var turtle = null;
+            var logo = null;
+            var form;
+
+            var textOutput;
+
+            function init(form_id, oldcode_id, textoutput_id) {
+
+
+                form = document.getElementById(form_id);
+                textOutput = document.getElementById(textoutput_id);
+
+                oldcode = document.getElementById(oldcode_id);
+
+                setup();
+            }
+
+            function setup() {
+                logo = new Logo()
+
+
+                turtle = new PlayerCommands();
+                logo.setTurtle(turtle);
+                logo.setTextOutput(textOutput);
+            }
+
+
+            function run() {
+                turtle.stop();
+
+                var code = form.code.value;
+                oldcode.innerHTML += "\n" + code
+                form.code.value = ""
+
+
+                var out = logo.run(code);
+
+                if (out && out.type == "error") {
+                    oldcode.innerHTML += "\nerror: " + out.data;
+                    logo.t = new Tokenizer();
+                }
+
+                oldcode.scrollTop = oldcode.scrollHeight;// keep scroll bar at bottom on overflow
+
+                if (oldcode.createTextRange) {
+                    var range = oldcode.createTextRange();
+                    range.collapse(false);
+                    range.select();
+                }
+            }
+
+            function stop() {
+                turtle.stop();
+            }
+
+
+            function change(code) {
+
+                if (code.match(/\n$/)) {
+                    tos = code.match(/\bto\b/gi);
+
+                    if (tos) {
+                        tos = tos.length
+                    } else {
+                        tos = 0
+                    }
+                    ends = code.match(/\bend\b/gi);
+                    if (ends) {
+                        ends = ends.length
+                    } else {
+                        ends = 0
+                    }
+                    if (tos == ends) {
+
+                        tos = code.match(/\[/g);
+                        if (tos) {
+                            tos = tos.length
+                        } else {
+                            tos = 0
+                        }
+                        ends = code.match(/\]/g);
+                        if (ends) {
+                            ends = ends.length
+                        } else {
+                            ends = 0
+                        }
+
+                        if (tos == ends) {
+                            tos = code.match(/\(/g);
+                            if (tos) {
+                                tos = tos.length
+                            } else {
+                                tos = 0
+                            }
+                            ends = code.match(/\)/g);
+                            if (ends) {
+                                ends = ends.length
+                            } else {
+                                ends = 0
+                            }
+
+                            if (tos == ends) {
+
+                                run();
+
+                            }
+                        }
+                    }
+                }
+            }
+        </script>
+    </head>
+
+    <body onload="init('input', 'oldcode', 'textOutput');
+
+            run();">
+
+        <div id="main">
+            <form id="input">
+
+                <div id="content">
+
+                    <div id="left">
+
+
+                        <div id="textOutput"></div>
+                        <div id="gamearea">
+
+
+
+                        </div>
+
+
+
+
+
+                    </div>
+                    <div id ="right">
+
+
+                        <div id="oldcode">&nbsp;</div>
+                        <div id ="newcode">
+                            <textarea onkeyup="return change(this.value);" name="code" id="code" rows="80" cols="20"></textarea>
+                        </div>
+                        <div style="margin: 5px;">
+                            <input type="button" onClick="run();" value="run" style="font-weight: bold;"/>
+                        </div>
+                    </div>
+
+
+
+
+                </div>
+            </form>
+
+
+        </div>
+    </body>
+</html>
