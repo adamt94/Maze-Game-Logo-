@@ -51,7 +51,7 @@ function Player() {
         this.width = 10;
         this.height = 10;
         //players previous position 
-        this.previousPosition =[this.x,this.y];
+        this.previousPosition =[this.x,this.y,this.angle];
 
 
         this.setup();
@@ -59,18 +59,32 @@ function Player() {
 }
 
 //returns the playe
-Player.prototype.saveState = function(){
-
-}
+Player.prototype.saveState = function(x, y,angle){
+    this.previousPosition[0] =x;
+    this.previousPosition[1]=y;
+    this.previousPosition[2]=angle;
+    
+};
+Player.prototype.getState = function(){
+    
+    return  this.previousPosition;
+};
 
 
 
 //removes previously drawn object and draws the new player position
 Player.prototype.update = function () {
- 
+        
         $("div.player").remove();
         if(!checkCollision(this.x,this.y,this.height,this.width,wall.x,wall.y,wall.height,wall.width)) {
             drawElement("player", this.x, this.y, this.angle);
+        }else{
+            //there was a collision reset player to previous position
+            drawElement("player",this.previousPosition[0],this.previousPosition[1],this.previousPosition[2]);
+            this.x = this.previousPosition[0];
+            this.y = this.previousPosition[1];
+            this.angle = this.previousPosition[2];
+            console.log(this.x+"  "+ this.y+"   "+ this.angle)
         }
         drawElement("wall",wall.x,wall.y);
 
@@ -104,14 +118,16 @@ Player.prototype.sety = function (x, y) {
 
 //method for moving the player foward
 Player.prototype.forward = function (d) {
-
+    
+    this.saveState(this.x,this.y,this.angle);
+    
     this.crawl(d);
-}
+};
 
 //method moves a player foward accounting for angle its facing
 Player.prototype.crawl = function (d) {
     //move at 10 pixels at a time
-    d = d*10
+    d = d*10;
 
     var newx = this.x + d * Math.cos(this.radians());
     var newy = this.y + d * Math.sin(this.radians());
@@ -122,24 +138,25 @@ Player.prototype.crawl = function (d) {
     this.x = newx;
     this.y = newy;
     this.update();
-}
+};
 //method to move player backwards
 Player.prototype.backward = function (d) {
+    this.saveState(this.x,this.y, this.angle);
     this.forward(-d);
-}
+};
 
 //method for rotating the player clockwise by a given angle
 Player.prototype.right = function (angle) {
-
+    this.saveState(this.x,this.y,this.angle);
     this.angle = (this.angle + angle) % 360;
     this.update();
-}
+};
 
 //method for rotating the player anti-clockwise by a given angle
 Player.prototype.left = function (angle) {
-
+    this.saveState(this.x,this.y,this.angle);
     this.right(-angle);
-}
+};
 
 
 
@@ -252,7 +269,7 @@ PlayerCommands.prototype.addCommand = function (fun, args) {
 
 
 PlayerCommands.prototype.forward = function (d) {
-        
+        this.turtle.saveState(this.turtle.x,this.turtle.y,this.turtle.angle);
         var l = Math.abs(d);
         
         var s = l / d;
@@ -261,6 +278,7 @@ PlayerCommands.prototype.forward = function (d) {
         for (var i = 0; i < l; i++) {
             this.addCommand(this.turtle.crawl, [s]);
         }
+       // this.addCommand(this.turtle.forward,arguments);
      
 };
 PlayerCommands.prototype.backward = function (d) {
@@ -268,26 +286,26 @@ PlayerCommands.prototype.backward = function (d) {
 };
 
 PlayerCommands.prototype.right = function () {
-    this.addCommand(this.turtle.right, arguments)
+    this.addCommand(this.turtle.right, arguments);
 };
 PlayerCommands.prototype.left = function () {
-    this.addCommand(this.turtle.left, arguments)
+    this.addCommand(this.turtle.left, arguments);
 };
 PlayerCommands.prototype.reset = function () {
-    this.addCommand(this.turtle.reset, arguments)
+    this.addCommand(this.turtle.reset, arguments);
 };
 
 PlayerCommands.prototype.setxy = function () {
-    this.addCommand(this.turtle.setxy, arguments)
+    this.addCommand(this.turtle.setxy, arguments);
 };
 PlayerCommands.prototype.setx = function () {
-    this.addCommand(this.turtle.setx, arguments)
+    this.addCommand(this.turtle.setx, arguments);
 };
 PlayerCommands.prototype.sety = function () {
-    this.addCommand(this.turtle.sety, arguments)
+    this.addCommand(this.turtle.sety, arguments);
 };
 
 
 PlayerCommands.prototype.home = function () {
-    this.addCommand(this.turtle.home, arguments)
+    this.addCommand(this.turtle.home, arguments);
 };
