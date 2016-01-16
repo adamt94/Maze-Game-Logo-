@@ -1,4 +1,61 @@
 
+$(document).ready(function(){
+    //$.get('lvl.txt', function(data) {
+    //    //var fileDom = $(data);
+    //
+    //    var lines = data.split("\n");//split to each line
+    //    for(var i =0; i<lines.length;i++) {
+    //        var ret = lines[i].split("/ +/");//split to each number
+    //
+    //        $.each(ret, function (n, elem) {
+    //
+    //
+    //            $('#oldcode').append('<div>' + ret + '</div>');
+    //
+    //
+    //        });
+    //    }
+    //});
+    var  g = new Game();
+
+
+});
+
+
+
+//setups the game, draws the level and player, board size.
+function Game(){
+    this.gameHeight = 500;
+    this.gameWidth= 500;
+    this.level =  loadlevel();
+
+    
+    //return playercommands for logo.js
+    return new PlayerCommands();
+}
+function loadlevel(){
+    var temp = [];
+    $.get('lvl.txt', function(data) {
+        //var fileDom = $(data);
+
+        var lines = data.split("\n");//split to each line
+        for(var i =0; i<lines.length;i++) {
+            temp[i] =[];//initialise 2d array
+            var lvlArray = lines[i].split(" ");//split to each number
+            for(var j = 0; j<lvlArray.length; j++)
+            {
+                temp[i][j] = lvlArray[j];
+                $('#oldcode').append('<div>' + temp[i][j] + '</div>');
+            }
+
+        }
+
+    });
+    return temp
+
+}
+
+
 //object that defines a wall
 function Wall(xpos,ypos){
     this.x = xpos;
@@ -19,13 +76,7 @@ function checkCollision(objectx,objecty, objectHeight,objectWidth, object2x,obje
     }
     return false;
 
-   //// console.log("x: "+objectx+" y: "+objecty+" h: "+objectHeight+ " w: "+
-   //     objectWidth+" 2x: "+object2x+" 2y: "+object2y+ " 2h: "
-   //     +object2Height+" 2w: "+object2Width );
-   //// console.log(objectx < object2x + object2Width &&
-   //     objectx + objectWidth > object2x &&
-   //     objecty < object2y + object2Height &&
-   //     objectHeight + objecty > object2y);
+
 }
 var wall = new Wall(250,250);
 
@@ -58,7 +109,7 @@ function Player() {
     
 }
 
-//returns the playe
+//returns the players previous position
 Player.prototype.saveState = function(x, y,angle){
     this.previousPosition[0] =x;
     this.previousPosition[1]=y;

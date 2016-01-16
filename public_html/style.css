@@ -37,7 +37,7 @@ and open the template in the editor.
     background: rgb(100, 101, 101);
 
 
-    height: 545px; /* I hate CSS */
+    height: 500px;
 }
 
 
@@ -47,7 +47,7 @@ and open the template in the editor.
 #oldcode {
     font-family: monospace;
     white-space: pre;
-
+    padding:2px;
     overflow-y: scroll;
     background: #8f8d91;
     height: 200px;
@@ -78,9 +78,9 @@ width: 100%;
 
 #left{
     float: left;
-    width: 520px;
+    width: 500px;
 
-    height: 560px;
+    height: 500px;
     background: rgb(60, 61, 61);
     border-style: solid;
 
