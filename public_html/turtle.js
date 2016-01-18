@@ -1,60 +1,79 @@
-
+var temp = [];
+var g;
 $(document).ready(function(){
-    //$.get('lvl.txt', function(data) {
-    //    //var fileDom = $(data);
-    //
-    //    var lines = data.split("\n");//split to each line
-    //    for(var i =0; i<lines.length;i++) {
-    //        var ret = lines[i].split("/ +/");//split to each number
-    //
-    //        $.each(ret, function (n, elem) {
-    //
-    //
-    //            $('#oldcode').append('<div>' + ret + '</div>');
-    //
-    //
-    //        });
-    //    }
-    //});
-    var  g = new Game();
+
+      g = new Game();
 
 
 });
+//jquery get is asynchronous function to stop this when getting file
+function getRemote() {
+    return $.ajax({
+        type: "GET",
+        url: "lvl.txt",
+        async: false
+    }).responseText;
+}
 
 
 
 //setups the game, draws the level and player, board size.
 function Game(){
+    
+
     this.gameHeight = 500;
     this.gameWidth= 500;
-    this.level =  loadlevel();
+    this.level =  this.loadlevel();
+    this.loadlevel();
+    this.drawLevel();
+    $('#oldcode').append('<div>' + this.level[0].length+ '</div>');
 
     
     //return playercommands for logo.js
     return new PlayerCommands();
 }
-function loadlevel(){
-    var temp = [];
-    $.get('lvl.txt', function(data) {
-        //var fileDom = $(data);
 
-        var lines = data.split("\n");//split to each line
+
+Game.prototype.loadlevel = function(){
+
+
+
+        var fileDom = getRemote();
+        temp =[];
+
+        var lines = fileDom.split("\n");//split to each line
         for(var i =0; i<lines.length;i++) {
-            temp[i] =[];//initialise 2d array
+             temp[i] =[];//initialise 2d array
             var lvlArray = lines[i].split(" ");//split to each number
             for(var j = 0; j<lvlArray.length; j++)
             {
                 temp[i][j] = lvlArray[j];
-                $('#oldcode').append('<div>' + temp[i][j] + '</div>');
+
+
             }
 
         }
 
-    });
+
     return temp
 
-}
 
+
+};
+Game.prototype.drawLevel = function(){
+    for( var i = 0 ; i<this.level.length; i++)
+    {
+      //  var length = this.level[i];
+       for(var j = 0; j <this.level[0].length; j++)
+        {
+           var walls = new Wall(j*10,i*10);
+
+            drawElement("wall",walls.x,walls.y,0);
+        }
+
+    }
+
+};
 
 //object that defines a wall
 function Wall(xpos,ypos){
@@ -138,6 +157,7 @@ Player.prototype.update = function () {
             console.log(this.x+"  "+ this.y+"   "+ this.angle)
         }
         drawElement("wall",wall.x,wall.y);
+
 
 
        // this.sprite.setAttribute('transform', 'rotate(' + (this.angle) + ' 10 10)');
