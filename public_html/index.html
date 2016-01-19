@@ -24,13 +24,13 @@ and open the template in the editor.
 
             var textOutput;
 
-            function init(form_id, oldcode_id, textoutput_id) {
+            function init() {
 
 
-                form = document.getElementById(form_id);
-                textOutput = document.getElementById(textoutput_id);
+                form = $('#input')[0];
+                textOutput = $("#textOutput")[0];
 
-                oldcode = document.getElementById(oldcode_id);
+                oldcode = $("#oldcode")[0];
 
                 setup();
             }
@@ -39,7 +39,7 @@ and open the template in the editor.
                 logo = new Logo()
 
 
-                turtle = new PlayerCommands();
+                turtle = new Game();
                 logo.setTurtle(turtle);
                 logo.setTextOutput(textOutput);
             }
@@ -131,7 +131,7 @@ and open the template in the editor.
         </script>
     </head>
 
-    <body onload="init('input', 'oldcode', 'textOutput');
+    <body onload="init();
 
             run();">
 

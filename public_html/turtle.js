@@ -1,11 +1,14 @@
-var temp = [];
-var g;
+//var temp = [];
+var game;
 $(document).ready(function(){
 
-      g = new Game();
+
+
 
 
 });
+
+
 //jquery get is asynchronous function to stop this when getting file
 function getRemote() {
     return $.ajax({
@@ -17,29 +20,27 @@ function getRemote() {
 
 
 
-//setups the game, draws the level and player, board size.
-function Game(){
-    
+////setups the game, draws the level and player, board size.
+//function Game(player){
+//
+//    this.player = player;
+//    this.gameHeight = 500;
+//    this.gameWidth= 500;
+//    this.level =  this.loadlevel();
+//
+//    this.loadlevel();
+//    this.walls = this.drawLevel();
+//  //  $('#oldcode').append('<div>' + this.walls[1].x+ '</div>');
+//
+//
+//
+//}
 
-    this.gameHeight = 500;
-    this.gameWidth= 500;
-    this.level =  this.loadlevel();
-    this.loadlevel();
-    this.drawLevel();
-    $('#oldcode').append('<div>' + this.level[0].length+ '</div>');
-
-    
-    //return playercommands for logo.js
-    return new PlayerCommands();
-}
-
-
+//method returns txt numbers into array
 Game.prototype.loadlevel = function(){
 
-
-
         var fileDom = getRemote();
-        temp =[];
+        var temp =[];
 
         var lines = fileDom.split("\n");//split to each line
         for(var i =0; i<lines.length;i++) {
@@ -55,32 +56,39 @@ Game.prototype.loadlevel = function(){
         }
 
 
-    return temp
+    return temp;
 
 
 
 };
+
+//atm return array of wall objects
 Game.prototype.drawLevel = function(){
+     var tempwalls = [];
     for( var i = 0 ; i<this.level.length; i++)
     {
       //  var length = this.level[i];
+
        for(var j = 0; j <this.level[0].length; j++)
         {
-           var walls = new Wall(j*10,i*10);
+            //check if int is 1 for a wall
+            if(this.level[i][j]==1) {
+            tempwalls.push(new Wall(j*20,i*20));
 
-            drawElement("wall",walls.x,walls.y,0);
+                drawElement("wall", tempwalls[tempwalls.length-1].x, tempwalls[tempwalls.length-1].y, 0);
+            }
         }
 
     }
-
+    return tempwalls;
 };
 
 //object that defines a wall
 function Wall(xpos,ypos){
     this.x = xpos;
     this.y = ypos;
-    this.width = 10;
-    this.height = 10;
+    this.width = 20;
+    this.height = 20;
 
 }
 //check if two objects collide
@@ -110,7 +118,7 @@ function drawElement(classname, xpos, ypos, angle) {
 
 
 //functions that creates a player which setup its starting position
-function Player() {
+function Player(walls) {
    
         //height and length of the area
         this.max_x = 500;
@@ -118,11 +126,12 @@ function Player() {
         //center of canvas
         this.x = this.max_x / 2;
         this.y = this.max_y / 2;
-        this.width = 10;
-        this.height = 10;
+        this.width = 20;
+        this.height = 20;
         //players previous position 
         this.previousPosition =[this.x,this.y,this.angle];
-
+        this.walled = walls;
+        console.log(this.walled[0]);
 
         this.setup();
     
@@ -144,19 +153,30 @@ Player.prototype.getState = function(){
 
 //removes previously drawn object and draws the new player position
 Player.prototype.update = function () {
-        
+
         $("div.player").remove();
-        if(!checkCollision(this.x,this.y,this.height,this.width,wall.x,wall.y,wall.height,wall.width)) {
-            drawElement("player", this.x, this.y, this.angle);
-        }else{
-            //there was a collision reset player to previous position
-            drawElement("player",this.previousPosition[0],this.previousPosition[1],this.previousPosition[2]);
-            this.x = this.previousPosition[0];
-            this.y = this.previousPosition[1];
-            this.angle = this.previousPosition[2];
-            console.log(this.x+"  "+ this.y+"   "+ this.angle)
-        }
-        drawElement("wall",wall.x,wall.y);
+   for(var i =0; i< this.walled.length; i++) {
+    //    for (var j = 0; j < this.walled[i].length; j++) {
+
+
+            if (!checkCollision(this.x, this.y, this.height, this.width, this.walled[i].x, this.walled[i].y, this.walled[i].height,this.walled[i].width)
+                &&this.x<this.max_x && this.x>=0&&this.y>=0&&this.y<this.max_y) {
+                drawElement("player", this.x, this.y, this.angle);
+
+            } else {
+                //there was a collision reset player to previous position
+                $("div.player").remove();
+                drawElement("player", this.previousPosition[0], this.previousPosition[1], this.previousPosition[2]);
+                this.x = this.previousPosition[0];
+                this.y = this.previousPosition[1];
+                this.angle = this.previousPosition[2];
+                console.log(this.x + "  " + this.y + "   " + this.angle)
+
+
+            }
+     //   }
+    }
+
 
 
 
@@ -198,7 +218,7 @@ Player.prototype.forward = function (d) {
 //method moves a player foward accounting for angle its facing
 Player.prototype.crawl = function (d) {
     //move at 10 pixels at a time
-    d = d*10;
+    d = d*20;
 
     var newx = this.x + d * Math.cos(this.radians());
     var newy = this.y + d * Math.sin(this.radians());
@@ -269,17 +289,26 @@ DelayCommand.prototype.call = function (that) {
 };
 
 //This method creates the player and uses pipeline which contains all the player movement commands
-function PlayerCommands() {
-    this.turtle = new Player();
+function Game() {
+    //reads in the data for level from file
+    this.level =  this.loadlevel();
+    //array of all the maze walls
+    this.walls = this.drawLevel();
+
+    this.turtle = new Player(this.walls);
     //array for adding the commands giving to it by logo
     this.pipeline = null;
     this.active = false;
     this.halt = false;
     this.speed = 250;
 
+    //setups the game, draws the level and player, board size.
+    this.gameHeight = 500;
+    this.gameWidth= 500;
+
 }
 //starts the player when a logo command is send to logo
-PlayerCommands.prototype.start = function () {
+Game.prototype.start = function () {
     this.active = true;
     this.halt = false;
     this.pipeline = new Array();
@@ -287,15 +316,15 @@ PlayerCommands.prototype.start = function () {
     this.paint();
 };
 //once has added command logo calls finish.
-PlayerCommands.prototype.finish = function () {
+Game.prototype.finish = function () {
     this.active = false;
 };
 //stop
-PlayerCommands.prototype.stop = function () {
+Game.prototype.stop = function () {
     this.halt = true;
 };
 //method get the command from the pipeline and calls the method
-PlayerCommands.prototype.paint = function () {
+Game.prototype.paint = function () {
 
     if (!this.halt) {
         var redraw = this.active;
@@ -332,14 +361,14 @@ PlayerCommands.prototype.paint = function () {
  */
 
 
-PlayerCommands.prototype.addCommand = function (fun, args) {
+Game.prototype.addCommand = function (fun, args) {
     
     this.pipeline.push(new DelayCommand(this.turtle, fun, args));
 };
 
 
 
-PlayerCommands.prototype.forward = function (d) {
+Game.prototype.forward = function (d) {
         this.turtle.saveState(this.turtle.x,this.turtle.y,this.turtle.angle);
         var l = Math.abs(d);
         
@@ -352,31 +381,31 @@ PlayerCommands.prototype.forward = function (d) {
        // this.addCommand(this.turtle.forward,arguments);
      
 };
-PlayerCommands.prototype.backward = function (d) {
+Game.prototype.backward = function (d) {
     this.forward(-d);
 };
 
-PlayerCommands.prototype.right = function () {
+Game.prototype.right = function () {
     this.addCommand(this.turtle.right, arguments);
 };
-PlayerCommands.prototype.left = function () {
+Game.prototype.left = function () {
     this.addCommand(this.turtle.left, arguments);
 };
-PlayerCommands.prototype.reset = function () {
+Game.prototype.reset = function () {
     this.addCommand(this.turtle.reset, arguments);
 };
 
-PlayerCommands.prototype.setxy = function () {
+Game.prototype.setxy = function () {
     this.addCommand(this.turtle.setxy, arguments);
 };
-PlayerCommands.prototype.setx = function () {
+Game.prototype.setx = function () {
     this.addCommand(this.turtle.setx, arguments);
 };
-PlayerCommands.prototype.sety = function () {
+Game.prototype.sety = function () {
     this.addCommand(this.turtle.sety, arguments);
 };
 
 
-PlayerCommands.prototype.home = function () {
+Game.prototype.home = function () {
     this.addCommand(this.turtle.home, arguments);
 };
