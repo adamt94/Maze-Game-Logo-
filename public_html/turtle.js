@@ -72,7 +72,7 @@ Game.prototype.drawLevel = function(){
        for(var j = 0; j <this.level[0].length; j++)
         {
             //check if int is 1 for a wall
-            if(this.level[i][j]==1) {
+            if(this.level[i][j]==1||this.level[i][j]==2) {
             tempwalls.push(new Wall(j*20,i*20));
 
                 drawElement("wall", tempwalls[tempwalls.length-1].x, tempwalls[tempwalls.length-1].y, 0);
@@ -119,7 +119,7 @@ function drawElement(classname, xpos, ypos, angle) {
 
 //functions that creates a player which setup its starting position
 function Player(walls) {
-   
+
         //height and length of the area
         this.max_x = 500;
         this.max_y = 500;
@@ -290,8 +290,10 @@ DelayCommand.prototype.call = function (that) {
 
 //This method creates the player and uses pipeline which contains all the player movement commands
 function Game() {
+     var gasd = new GenerateMaze(13,13);
     //reads in the data for level from file
-    this.level =  this.loadlevel();
+    this.level =  gasd.data;
+ //   this.level = Generate(10,10);
     //array of all the maze walls
     this.walls = this.drawLevel();
 
@@ -328,19 +330,19 @@ Game.prototype.paint = function () {
 
     if (!this.halt) {
         var redraw = this.active;
-      
+
         if (this.pipeline.length > 0) {
-       
+
             do {
                 var fun = this.pipeline.shift();
-               
-                
+
+
                 //call the method
                 fun.call();
-                
+
                 redraw = true;
-         
-            } while (this.speed <= 1  && this.pipeline.length > 0)
+
+            } while (this.speed <= 1 && this.pipeline.length > 0)
         }
         if (redraw) {
             var that = this;
@@ -352,7 +354,7 @@ Game.prototype.paint = function () {
             }, this.speed);
         }
     }
-}
+};
 
 
 /*=========================================================
