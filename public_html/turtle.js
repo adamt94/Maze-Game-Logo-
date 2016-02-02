@@ -20,22 +20,6 @@ function getRemote() {
 
 
 
-////setups the game, draws the level and player, board size.
-//function Game(player){
-//
-//    this.player = player;
-//    this.gameHeight = 500;
-//    this.gameWidth= 500;
-//    this.level =  this.loadlevel();
-//
-//    this.loadlevel();
-//    this.walls = this.drawLevel();
-//  //  $('#oldcode').append('<div>' + this.walls[1].x+ '</div>');
-//
-//
-//
-//}
-
 //method returns txt numbers into array
 Game.prototype.loadlevel = function(){
 
@@ -62,24 +46,76 @@ Game.prototype.loadlevel = function(){
 
 };
 
-//atm return array of wall objects
-Game.prototype.drawLevel = function(){
+//atm return array of wall objects, draws each section to the maze passed through parameter
+Game.prototype.drawLevel = function(NE,NW,SE,SW){
      var tempwalls = [];
-    for( var i = 0 ; i<this.level.length; i++)
-    {
-      //  var length = this.level[i];
 
-       for(var j = 0; j <this.level[0].length; j++)
+    for( var i = 0 ; i<NE.length; i++)
+    {
+        //  var length = this.level[i];
+
+        for(var j = 0; j <NE[0].length; j++)
         {
             //check if int is 1 for a wall
-            if(this.level[i][j]==1||this.level[i][j]==2) {
-            tempwalls.push(new Wall(j*20,i*20));
+            if(NE[i][j]==1) {
+                //creates a wall in x y position (-20 to adjust for padding)
+                tempwalls.push(new Wall((j*20)-20,(i*20)-20));
 
                 drawElement("wall", tempwalls[tempwalls.length-1].x, tempwalls[tempwalls.length-1].y, 0);
             }
         }
 
     }
+    if(NW != undefined) {
+        for (var i = 0; i < NW.length; i++) {
+            //  var length = this.level[i];
+
+            for (var j = 0; j < NW[0].length; j++) {
+                //check if int is 1 for a wall
+                if (NW[i][j] == 1) {
+                    //creates a wall in x y position (-20 to adjust for padding)
+                    tempwalls.push(new Wall(((240 + (j * 20)) - 20), (i * 20) - 20));
+
+                    drawElement("wall", tempwalls[tempwalls.length - 1].x, tempwalls[tempwalls.length - 1].y, 0);
+                }
+            }
+
+        }
+    }
+    if(SE != undefined) {
+        for (var i = 0; i < SE.length; i++) {
+            //  var length = this.level[i];
+
+            for (var j = 0; j < SE[0].length; j++) {
+                //check if int is 1 for a wall
+                if (SE[i][j] == 1) {
+                    //creates a wall in x y position (-20 to adjust for padding)
+                    tempwalls.push(new Wall((((j * 20)) - 20),(240+ (i * 20)) - 20));
+
+                    drawElement("wall", tempwalls[tempwalls.length - 1].x, tempwalls[tempwalls.length - 1].y, 0);
+                }
+            }
+
+        }
+    }
+    if(SW != undefined) {
+        for (var i = 0; i < SW.length; i++) {
+            //  var length = this.level[i];
+
+            for (var j = 0; j < SW[0].length; j++) {
+                //check if int is 1 for a wall
+                if (SW[i][j] == 1) {
+                    //creates a wall in x y position (-20 to adjust for padding)
+                    tempwalls.push(new Wall(((240 + (j * 20)) - 20),(240+ (i * 20)) - 20));
+
+                    drawElement("wall", tempwalls[tempwalls.length - 1].x, tempwalls[tempwalls.length - 1].y, 0);
+                }
+            }
+
+        }
+    }
+
+
     return tempwalls;
 };
 
@@ -105,7 +141,7 @@ function checkCollision(objectx,objecty, objectHeight,objectWidth, object2x,obje
 
 
 }
-var wall = new Wall(250,250);
+
 
 //fuction that draws a given css class name to screen
 function drawElement(classname, xpos, ypos, angle) {
@@ -126,8 +162,8 @@ function Player(walls) {
         //center of canvas
         this.x = this.max_x / 2;
         this.y = this.max_y / 2;
-        this.width = 20;
-        this.height = 20;
+        this.width = 19;
+        this.height = 19;
         //players previous position 
         this.previousPosition =[this.x,this.y,this.angle];
         this.walled = walls;
@@ -160,7 +196,7 @@ Player.prototype.update = function () {
 
 
             if (!checkCollision(this.x, this.y, this.height, this.width, this.walled[i].x, this.walled[i].y, this.walled[i].height,this.walled[i].width)
-                &&this.x<this.max_x && this.x>=0&&this.y>=0&&this.y<this.max_y) {
+                ) {
                 drawElement("player", this.x, this.y, this.angle);
 
             } else {
@@ -171,7 +207,7 @@ Player.prototype.update = function () {
                 this.y = this.previousPosition[1];
                 this.angle = this.previousPosition[2];
                 console.log(this.x + "  " + this.y + "   " + this.angle)
-
+                console.log(this.walled[i].x+"  "+this.walled[i].y);
 
             }
      //   }
@@ -290,12 +326,18 @@ DelayCommand.prototype.call = function (that) {
 
 //This method creates the player and uses pipeline which contains all the player movement commands
 function Game() {
-     var gasd = new GenerateMaze(13,13);
+     var gasd = new GenerateMaze(15,15);
     //reads in the data for level from file
     this.level =  gasd.data;
- //   this.level = Generate(10,10);
+    //each maze section
+    this.NEmaze = gasd.data;
+    this.NWmaze = gasd.data2;
+    this.SWmaze = gasd.data3;
+    this.SEmaze = gasd.data4;
+ //   this.level = this.loadlevel();
+  //  this.level = Generate(10,10);
     //array of all the maze walls
-    this.walls = this.drawLevel();
+    this.walls = this.drawLevel(this.NEmaze,this.NWmaze,this.SEmaze,this.SWmaze);
 
     this.turtle = new Player(this.walls);
     //array for adding the commands giving to it by logo
