@@ -10,10 +10,10 @@ $(document).ready(function(){
 
 
 //jquery get is asynchronous function to stop this when getting file
-function getRemote() {
+function getRemote(path) {
     return $.ajax({
         type: "GET",
-        url: "lvl.txt",
+        url: path,
         async: false
     }).responseText;
 }
@@ -23,15 +23,17 @@ function getRemote() {
 //method returns txt numbers into array
 Game.prototype.loadlevel = function(){
 
-        var fileDom = getRemote();
+        var fileDom = getRemote("lvl.txt");
         var temp =[];
 
         var lines = fileDom.split("\n");//split to each line
+
         for(var i =0; i<lines.length;i++) {
              temp[i] =[];//initialise 2d array
             var lvlArray = lines[i].split(" ");//split to each number
             for(var j = 0; j<lvlArray.length; j++)
             {
+
                 temp[i][j] = lvlArray[j];
 
 
@@ -57,11 +59,14 @@ Game.prototype.drawLevel = function(NE,NW,SE,SW){
         for(var j = 0; j <NE[0].length; j++)
         {
             //check if int is 1 for a wall
-            if(NE[i][j]==1) {
-                //creates a wall in x y position (-20 to adjust for padding)
-                tempwalls.push(new Wall((j*20)-20,(i*20)-20));
+            if(NE[i][j]>0) {
+                //checks if wall is out of bounds
+                if(((j*20)-20)>=0&&((i*20)-20)>=0) {
+                    //creates a wall in x y position (-20 to adjust for padding)
+                    tempwalls.push(new Wall((j * 20) - 20, (i * 20) - 20));
 
-                drawElement("wall", tempwalls[tempwalls.length-1].x, tempwalls[tempwalls.length-1].y, 0);
+                    drawElement("wall", tempwalls[tempwalls.length - 1].x, tempwalls[tempwalls.length - 1].y, 0);
+                }
             }
         }
 
@@ -72,11 +77,16 @@ Game.prototype.drawLevel = function(NE,NW,SE,SW){
 
             for (var j = 0; j < NW[0].length; j++) {
                 //check if int is 1 for a wall
-                if (NW[i][j] == 1) {
-                    //creates a wall in x y position (-20 to adjust for padding)
-                    tempwalls.push(new Wall(((240 + (j * 20)) - 20), (i * 20) - 20));
+                if (NW[i][j] > 0) {
+                            console.log(NW.length);
+                    var xbounds = (((NW.length-1)*20 + (j * 20)) - 20);
+                    var ybounds =  (i * 20) - 20;
+                    if (xbounds >= 0&&xbounds <this.gameWidth && ybounds >= 0) {
+                        //creates a wall in x y position (-20 to adjust for padding)
+                        tempwalls.push(new Wall(xbounds, ybounds));
 
-                    drawElement("wall", tempwalls[tempwalls.length - 1].x, tempwalls[tempwalls.length - 1].y, 0);
+                        drawElement("wall", tempwalls[tempwalls.length - 1].x, tempwalls[tempwalls.length - 1].y, 0);
+                    }
                 }
             }
 
@@ -88,11 +98,15 @@ Game.prototype.drawLevel = function(NE,NW,SE,SW){
 
             for (var j = 0; j < SE[0].length; j++) {
                 //check if int is 1 for a wall
-                if (SE[i][j] == 1) {
-                    //creates a wall in x y position (-20 to adjust for padding)
-                    tempwalls.push(new Wall((((j * 20)) - 20),(240+ (i * 20)) - 20));
+                if (SE[i][j] > 0) {
+                    var xbounds = (((j * 20)) - 20);
+                    var ybounds = ((SE[0].length-1)*20 + (i * 20)) - 20;
+                    if (xbounds >= 0 && ybounds < this.gameHeight) {
+                        //creates a wall in x y position (-20 to adjust for padding)
+                        tempwalls.push(new Wall(xbounds, ybounds));
 
-                    drawElement("wall", tempwalls[tempwalls.length - 1].x, tempwalls[tempwalls.length - 1].y, 0);
+                        drawElement("wall", tempwalls[tempwalls.length - 1].x, tempwalls[tempwalls.length - 1].y, 0);
+                    }
                 }
             }
 
@@ -104,11 +118,16 @@ Game.prototype.drawLevel = function(NE,NW,SE,SW){
 
             for (var j = 0; j < SW[0].length; j++) {
                 //check if int is 1 for a wall
-                if (SW[i][j] == 1) {
+                if (SW[i][j]> 0) {
+                    var xbounds = (((SW.length-1)*20 + (j * 20)) - 20);
+                    var ybounds = ((SW[0].length-1)*20  + (i * 20)) - 20;
+                    if (xbounds < this.gameWidth && ybounds < this.gameHeight) {
+
                     //creates a wall in x y position (-20 to adjust for padding)
-                    tempwalls.push(new Wall(((240 + (j * 20)) - 20),(240+ (i * 20)) - 20));
+                    tempwalls.push(new Wall(xbounds, ybounds));
 
                     drawElement("wall", tempwalls[tempwalls.length - 1].x, tempwalls[tempwalls.length - 1].y, 0);
+                }
                 }
             }
 
@@ -154,11 +173,11 @@ function drawElement(classname, xpos, ypos, angle) {
 
 
 //functions that creates a player which setup its starting position
-function Player(walls) {
+function Player(walls,height,width) {
 
         //height and length of the area
-        this.max_x = 500;
-        this.max_y = 500;
+        this.max_x = height;
+        this.max_y = width;
         //center of canvas
         this.x = this.max_x / 2;
         this.y = this.max_y / 2;
@@ -326,12 +345,14 @@ DelayCommand.prototype.call = function (that) {
 
 //This method creates the player and uses pipeline which contains all the player movement commands
 function Game() {
-     var gasd = new GenerateMaze(15,15);
+     var gasd = new GenerateMaze(13,13);
+    this.gameHeight = 460;
+    this.gameWidth= 460;
     //reads in the data for level from file
     this.level =  gasd.data;
     //each maze section
     this.NEmaze = gasd.data;
-    this.NWmaze = gasd.data2;
+    this.NWmaze = this.loadlevel();
     this.SWmaze = gasd.data3;
     this.SEmaze = gasd.data4;
  //   this.level = this.loadlevel();
@@ -339,7 +360,7 @@ function Game() {
     //array of all the maze walls
     this.walls = this.drawLevel(this.NEmaze,this.NWmaze,this.SEmaze,this.SWmaze);
 
-    this.turtle = new Player(this.walls);
+    this.turtle = new Player(this.walls,this.gameHeight,this.gameWidth);
     //array for adding the commands giving to it by logo
     this.pipeline = null;
     this.active = false;
@@ -347,8 +368,7 @@ function Game() {
     this.speed = 250;
 
     //setups the game, draws the level and player, board size.
-    this.gameHeight = 500;
-    this.gameWidth= 500;
+
 
 }
 //starts the player when a logo command is send to logo
