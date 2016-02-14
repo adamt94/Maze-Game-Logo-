@@ -2,7 +2,7 @@
 var game;
 $(document).ready(function(){
 
-
+console.log("BANTER!1232313213");
 
 
 
@@ -352,7 +352,7 @@ function Game() {
     this.level =  gasd.data;
     //each maze section
     this.NEmaze = gasd.data;
-    this.NWmaze = this.loadlevel();
+    this.NWmaze = gasd.data2;
     this.SWmaze = gasd.data3;
     this.SEmaze = gasd.data4;
  //   this.level = this.loadlevel();

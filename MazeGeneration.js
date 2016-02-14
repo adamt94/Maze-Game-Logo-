@@ -2,7 +2,7 @@
  * Created by adam on 23-Jan-16.
  */
 
-
+Math.seed = 8;
 
 function GenerateMaze(height, width){
 
@@ -104,8 +104,12 @@ GenerateMaze.prototype.Carve = function(x,y,maze){
     //directions for each cell
     var directionsX = [1,-1,0,0];
     var directionsY = [0,0,1,-1];
+    var test = Math.seededRandom(3,0);
+    test = Math.round(test);
+
     //choose random direction
-    var dir = Math.floor(Math.random() * 4);
+    var dir = test;
+
 
     //loop round each direction until finished
     for(var i =0; i<4; i++)
@@ -133,4 +137,15 @@ GenerateMaze.prototype.Carve = function(x,y,maze){
     }
     return maze;
 
+};
+
+//create a random seed
+Math.seededRandom = function(max, min) {
+    max = max || 1;
+    min = min || 0;
+
+    Math.seed = (Math.seed * 9301 + 49297) % 233280;
+    var rnd = Math.seed / 233280;
+
+    return min + rnd * (max - min);
 };
