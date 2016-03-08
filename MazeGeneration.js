@@ -2,13 +2,13 @@
  * Created by adam on 23-Jan-16.
  */
 
-Math.seed = 8;
+Math.seed = 0;
 
-function GenerateMaze(height, width){
+function GenerateMaze(height, width,seed){
 
     this.WALL = 1;
     this.SPACE = 0;
-
+    Math.seed = seed;
     this.height = height;
     this.width = width;
     this.data = this.Generate(this.width, this.height); //setup maze data NE
@@ -51,7 +51,7 @@ function GenerateMaze(height, width){
         }
         line +="\n";
     }
-    console.log(line);
+   // console.log(line);
 
 
 

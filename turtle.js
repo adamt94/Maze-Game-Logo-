@@ -2,7 +2,7 @@
 var game;
 $(document).ready(function(){
 
-console.log("BANTER!1232313213");
+
 
 
 
@@ -22,8 +22,9 @@ function getRemote(path) {
 
 //method returns txt numbers into array
 Game.prototype.loadlevel = function(){
-
-        var fileDom = getRemote("lvl.txt");
+        var a =  Math.seededRandom(4,1);
+        a = Math.round(a);
+        var fileDom = getRemote("maze_levels//lvl"+a+".txt");
         var temp =[];
 
         var lines = fileDom.split("\n");//split to each line
@@ -52,14 +53,14 @@ Game.prototype.loadlevel = function(){
 Game.prototype.drawLevel = function(NE,NW,SE,SW){
      var tempwalls = [];
 
-    for( var i = 0 ; i<NE.length; i++)
+    for( var i = 0 ; i<NW.length; i++)
     {
         //  var length = this.level[i];
 
-        for(var j = 0; j <NE[0].length; j++)
+        for(var j = 0; j <NW[0].length; j++)
         {
             //check if int is 1 for a wall
-            if(NE[i][j]>0) {
+            if(NW[i][j]>0) {
                 //checks if wall is out of bounds
                 if(((j*20)-20)>=0&&((i*20)-20)>=0) {
                     //creates a wall in x y position (-20 to adjust for padding)
@@ -71,43 +72,30 @@ Game.prototype.drawLevel = function(NE,NW,SE,SW){
         }
 
     }
-    if(NW != undefined) {
-        for (var i = 0; i < NW.length; i++) {
+    if(NE != undefined) {
+        for (var i = 0; i < NE.length; i++) {
             //  var length = this.level[i];
 
-            for (var j = 0; j < NW[0].length; j++) {
+            for (var j = 0; j < NE[0].length; j++) {
                 //check if int is 1 for a wall
-                if (NW[i][j] > 0) {
-                            console.log(NW.length);
-                    var xbounds = (((NW.length-1)*20 + (j * 20)) - 20);
-                    var ybounds =  (i * 20) - 20;
-                    if (xbounds >= 0&&xbounds <this.gameWidth && ybounds >= 0) {
+                if (NE[i][j] == 1) {
+                    //  console.log(NE.length);
+                    var xbounds = (((NE.length - 1) * 20 + (j * 20)));
+                    var ybounds = (i * 20) - 20;
+                    if (xbounds >= 0 && xbounds < this.gameWidth && ybounds >= 0) {
                         //creates a wall in x y position (-20 to adjust for padding)
                         tempwalls.push(new Wall(xbounds, ybounds));
 
                         drawElement("wall", tempwalls[tempwalls.length - 1].x, tempwalls[tempwalls.length - 1].y, 0);
                     }
                 }
-            }
-
-        }
-    }
-    if(SE != undefined) {
-        for (var i = 0; i < SE.length; i++) {
-            //  var length = this.level[i];
-
-            for (var j = 0; j < SE[0].length; j++) {
-                //check if int is 1 for a wall
-                if (SE[i][j] > 0) {
-                    var xbounds = (((j * 20)) - 20);
-                    var ybounds = ((SE[0].length-1)*20 + (i * 20)) - 20;
-                    if (xbounds >= 0 && ybounds < this.gameHeight) {
-                        //creates a wall in x y position (-20 to adjust for padding)
-                        tempwalls.push(new Wall(xbounds, ybounds));
-
-                        drawElement("wall", tempwalls[tempwalls.length - 1].x, tempwalls[tempwalls.length - 1].y, 0);
+                    else if(NE[i][j]==3){
+                    var xbounds2 = (((NE.length - 1) * 20 + (j * 20)));
+                    var ybounds2 = (i * 20) - 20;
+                        this.endPoints.push(new Finish(xbounds2, ybounds2));
+                        drawElement("finish",xbounds2,ybounds2,0);
                     }
-                }
+
             }
 
         }
@@ -118,9 +106,36 @@ Game.prototype.drawLevel = function(NE,NW,SE,SW){
 
             for (var j = 0; j < SW[0].length; j++) {
                 //check if int is 1 for a wall
-                if (SW[i][j]> 0) {
-                    var xbounds = (((SW.length-1)*20 + (j * 20)) - 20);
-                    var ybounds = ((SW[0].length-1)*20  + (i * 20)) - 20;
+                if (SW[i][j] == 1) {
+                    var xbounds = (((j * 20)));
+                    var ybounds = ((SW[0].length-1)*20 + (i * 20)) ;
+                    if (xbounds >= 0 && ybounds < this.gameHeight) {
+                        //creates a wall in x y position (-20 to adjust for padding)
+                        tempwalls.push(new Wall(xbounds, ybounds));
+
+                        drawElement("wall", tempwalls[tempwalls.length - 1].x, tempwalls[tempwalls.length - 1].y, 0);
+                    }
+                }
+                else if(SW[i][j]==3){
+                    var xbounds2 = (((j * 20)));
+                    var ybounds2 = ((SW[0].length-1)*20 + (i * 20)) ;
+                    this.endPoints.push(new Finish(xbounds2, ybounds2));
+                    drawElement("finish",xbounds2,ybounds2,0);
+                }
+                }
+            }
+
+        }
+
+    if(SE != undefined) {
+        for (var i = 0; i < SE.length; i++) {
+            //  var length = this.level[i];
+
+            for (var j = 0; j < SE[0].length; j++) {
+                //check if int is 1 for a wall
+                if (SE[i][j]== 1) {
+                    var xbounds = (((SE.length-1)*20 + (j * 20)) - 20);
+                    var ybounds = ((SE[0].length-1)*20  + (i * 20)) - 20;
                     if (xbounds < this.gameWidth && ybounds < this.gameHeight) {
 
                     //creates a wall in x y position (-20 to adjust for padding)
@@ -129,6 +144,8 @@ Game.prototype.drawLevel = function(NE,NW,SE,SW){
                     drawElement("wall", tempwalls[tempwalls.length - 1].x, tempwalls[tempwalls.length - 1].y, 0);
                 }
                 }
+
+
             }
 
         }
@@ -145,6 +162,14 @@ function Wall(xpos,ypos){
     this.width = 20;
     this.height = 20;
 
+}
+//object that defines a finish line
+function Finish(xpos, ypos, last){
+    this.x = xpos;
+    this.y = ypos;
+    this.width = 20;
+    this.height = 20;
+    this.finalfinsh = last;//is it the last finish point ie now sections left
 }
 //check if two objects collide
 function checkCollision(objectx,objecty, objectHeight,objectWidth, object2x,object2y,object2Height,object2Width){
@@ -173,7 +198,7 @@ function drawElement(classname, xpos, ypos, angle) {
 
 
 //functions that creates a player which setup its starting position
-function Player(walls,height,width) {
+function Player(walls,height,width,endpoints) {
 
         //height and length of the area
         this.max_x = height;
@@ -185,8 +210,9 @@ function Player(walls,height,width) {
         this.height = 19;
         //players previous position 
         this.previousPosition =[this.x,this.y,this.angle];
+        this.endpoint = endpoints;
         this.walled = walls;
-        console.log(this.walled[0]);
+    //    console.log(this.walled[0]);
 
         this.setup();
     
@@ -218,18 +244,42 @@ Player.prototype.update = function () {
                 ) {
                 drawElement("player", this.x, this.y, this.angle);
 
-            } else {
+            }
+            else {
                 //there was a collision reset player to previous position
                 $("div.player").remove();
                 drawElement("player", this.previousPosition[0], this.previousPosition[1], this.previousPosition[2]);
                 this.x = this.previousPosition[0];
                 this.y = this.previousPosition[1];
                 this.angle = this.previousPosition[2];
-                console.log(this.x + "  " + this.y + "   " + this.angle)
-                console.log(this.walled[i].x+"  "+this.walled[i].y);
+              //  console.log(this.x + "  " + this.y + "   " + this.angle)
+            //    console.log(this.walled[i].x+"  "+this.walled[i].y);
 
             }
      //   }
+    }
+
+    ///check is player is at a finish point
+
+    for(var i =0; i<this.endpoint.length; i++){
+
+        if(checkCollision(this.x,this.y,this.height,this.width,this.endpoint[i].x,this.endpoint[i].y,this.endpoint[i].height,this.endpoint[i].width)){
+            $("div.player").remove();
+            //teleports plays to next starting point
+            if(i ==0) {
+                this.x = 240;
+                this.y = 0;
+            }
+            if(i==1){
+                this.x = 0;
+                this.y =240;
+            }
+            if(i==2){
+                this.x=240;
+                this.y =240;
+            }
+            drawElement("player", this.x, this.y, this.angle);
+        }
     }
 
 
@@ -345,22 +395,23 @@ DelayCommand.prototype.call = function (that) {
 
 //This method creates the player and uses pipeline which contains all the player movement commands
 function Game() {
-     var gasd = new GenerateMaze(13,13);
+     var maze = new GenerateMaze(13,13,1);
     this.gameHeight = 460;
     this.gameWidth= 460;
     //reads in the data for level from file
-    this.level =  gasd.data;
+    this.level =  maze.data;
     //each maze section
-    this.NEmaze = gasd.data;
-    this.NWmaze = gasd.data2;
-    this.SWmaze = gasd.data3;
-    this.SEmaze = gasd.data4;
+    this.NEmaze = this.loadlevel();
+    this.NWmaze = maze.data;
+    this.SWmaze = this.loadlevel();
+    this.SEmaze = maze.data3;
+    this.endPoints = this.getFinishPoints();
  //   this.level = this.loadlevel();
   //  this.level = Generate(10,10);
     //array of all the maze walls
     this.walls = this.drawLevel(this.NEmaze,this.NWmaze,this.SEmaze,this.SWmaze);
 
-    this.turtle = new Player(this.walls,this.gameHeight,this.gameWidth);
+    this.turtle = new Player(this.walls,this.gameHeight,this.gameWidth,this.endPoints);
     //array for adding the commands giving to it by logo
     this.pipeline = null;
     this.active = false;
@@ -371,6 +422,19 @@ function Game() {
 
 
 }
+
+Game.prototype.getFinishPoints = function(){
+    var finishs =[];
+    finishs[0] = new Finish(200,200,false);
+   // finishs[1] = new Finish(440,200,false);
+   // finishs[2] = new Finish(200,440,false);
+    finishs[1] = new Finish(440,440,true);
+    drawElement('finish',finishs[0].x,finishs[0].y,0);
+ //   drawElement('finish',finishs[1].x,finishs[1].y,0);
+ //   drawElement('finish',finishs[2].x,finishs[2].y,0);
+    drawElement('finish',finishs[1].x,finishs[1].y,0);
+    return finishs;
+};
 //starts the player when a logo command is send to logo
 Game.prototype.start = function () {
     this.active = true;
