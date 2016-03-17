@@ -8,44 +8,167 @@ and open the template in the editor.
     Author     : ypf12pxu
 */
 
-
-
-.wall{
-    height: 19px;
-    width: 19px;
-    background: #1b1c1c;
-    position: absolute;
+@font-face {
+    font-family: nmsfont;
+    src: url(geonms-webfont.ttf);
 }
-
-.finish{
-    height: 15px;
-    width: 15px;
-    background: rgba(0, 181, 6, 1);
-    position: absolute;
+@font-face {
+    font-family: text;
+    src: url(LeagueGothic-Regular.otf);
 }
-
-#main{
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+body {
+    margin: 0px 0px 0px 0px;
+}
+/* HEADER WEBSITE*/
+#header{
     width: 100%;
-    margin: 0 auto;
+    height: 600px;
+    background: #121226;
+    overflow: hidden;
+    position: relative;
 
+
+
+}
+#nav{
+    position: relative;
+
+    float:right;
+    margin-right: 100px;
+    top: 10px;
+
+}
+#nav ul{
+
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+
+}
+#nav li{
+    display: inline;
+    padding: 20px;
+}
+#nav a{
+    text-decoration: none;
+    font-family:  nmsfont;
+    font-size: 25px;
+    color: #FFFFFF;
+
+}
+#nav a:hover{
+
+    color:orange;
+
+}
+a{
+    text-decoration: none;
+    font-family:  nmsfont;
+    font-size: 20px;
+    color: #d35400;
 }
 #content{
+    position: absolute;
     width: 100%;
-    height:100%;
+    top:600px;
+    height: auto;
+    padding-top: 150px;
+
+    background:  #FFFFFF;
+    padding-bottom:  60px;
+
 }
+h1 {
+
+    font-family: nmsfont;
+    font-size: 50px;
+    text-align: center;
+    color:#2c3e50;
+}
+h2{
+    font-family: nmsfont;
+    font-size: 50px;
+    text-align: center;
+    color: #FFFFFF;
+}
+h3{
+    font-family: nmsfont;
+    font-size: 30px;
+    text-align: left;
+    color: #FFFFFF;
+
+}
+P{
+    font-family: 'PT Sans', sans-serif;
+    font-size: 20px;
+    text-align: left;
+    color: #FFFFFF;
+
+}
+#footer{
+    position: absolute;
+    width: 100%;
+    height: 600px;
+    text-align: center;
+    margin-top: 1500px;
+    padding-top: 100px;
+    background: #282828;
+}
+
+#footer P{
+    font-family: 'PT Sans', sans-serif;
+    font-size: 20px;
+    text-align: center;
+    color: #FFFFFF;
+
+}
+.contentbox{
+    position: relative;
+    width: 60%;
+    margin:auto;
+    min-width: 1050px;
+    top:100px;
+    min-height: 700px;
+    height: auto;
+    background: #282828;
+    padding: 10px;
+
+}
+
+
+
+
+
+/*=======================css for the maze game==========================*/
 #right{
     float: left;
     width: 450px;
-
-
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 5%;
     padding:10px;
-    background: rgb(100, 101, 101);
+    background:#282828;
 
 
-    height: 500px;
+    height: 460px;
 }
 
+#left{
+    float:left;
+    width: 460px;
 
+    margin-left: 5%;
+    margin-top: 5%;
+    height: 460px;
+    background: rgb(60, 61, 61);
+    border-style: solid;
+
+    border-color: #1b1c1c;
+}
 
 
 
@@ -65,7 +188,7 @@ and open the template in the editor.
     overflow: hidden;
 
 
-    margin-top: 80px;
+    margin-top: 30px;
     height: 200px;
 
 
@@ -78,18 +201,6 @@ and open the template in the editor.
 width: 100%;
 
 
-
-}
-
-#left{
-    float: left;
-    width: 460px;
-
-    height: 460px;
-    background: rgb(60, 61, 61);
-    border-style: solid;
-
-    border-color: #1b1c1c;
 }
 #textOutput {
 	margin: 10px 0 10px 0;
@@ -97,7 +208,6 @@ width: 100%;
 	font-size: 20px;
 	background-color: transparent;
 }
-
 #gamearea  {
 
 	position: relative;
@@ -113,4 +223,17 @@ width: 100%;
     position: absolute;
 }
 
+.wall{
+    height: 19px;
+    width: 19px;
+    background: #1b1c1c;
+    position: absolute;
+}
+
+.finish{
+    height: 15px;
+    width: 15px;
+    background: rgba(0, 181, 6, 1);
+    position: absolute;
+}
 

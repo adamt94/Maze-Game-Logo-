@@ -169,7 +169,7 @@ function Finish(xpos, ypos, last){
     this.y = ypos;
     this.width = 20;
     this.height = 20;
-    this.finalfinsh = last;//is it the last finish point ie now sections left
+    this.finalpoint = last;//is it the last finish point ie now sections left
 }
 //check if two objects collide
 function checkCollision(objectx,objecty, objectHeight,objectWidth, object2x,object2y,object2Height,object2Width){
