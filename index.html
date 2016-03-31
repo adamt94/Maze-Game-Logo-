@@ -18,6 +18,12 @@ and open the template in the editor.
         <script type="text/javascript" src="parser.js"></script>
         <script type="text/javascript" src="logo.js"></script>
 
+        <!-- Bootstrap Core CSS - Uses Bootswatch Flatly Theme: http://bootswatch.com/flatly/ -->
+        <link href="bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="bootstrap/dist/css/freelancer.min.css" rel="stylesheet">
+        <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
+
 
 
         <script type="text/javascript">
@@ -137,54 +143,179 @@ and open the template in the editor.
     <body onload="init();
 
             run();">
-        <div id="header">
-            <div id="nav">
-                <ul>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#about">Intructions</a></li>
-                    <li><a href="#about">Play</a></li>
-                    <li><a href="#about">Credits</a></li>
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#page-top">UEA</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="hidden">
+                        <a href="#page-top"></a>
+                    </li>
+                    <li class="page-scroll">
+                        <a href="#portfolio">About</a>
+                    </li>
+                    <li class="page-scroll">
+                        <a href="#about">Play Game</a>
+                    </li>
+                    <li class="page-scroll">
+                        <a href="#contact">Help</a>
+                    </li>
                 </ul>
             </div>
+            <!-- /.navbar-collapse -->
         </div>
-        <div id="main">
-            <div id="content">
-                <div class="contentbox">
-            <form id="input">
+        <!-- /.container-fluid -->
+    </nav>
 
 
 
-                    <div id="left">
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <img class="img-responsive" src="img/profile.png" alt="">
+                    <div class="intro-text">
+                        <span class="name">The Maze Game</span>
+                        <hr class="star-light">
+                        <span class="skills">A Logo Programming Game</span>
+
+                </div>
+            </div>
+        </div>
+    </header>
 
 
-                        <div id="textOutput"></div>
-                        <div id="gamearea"></div>
 
 
-                    </div>
 
-                    <div id ="right">
+    <section id="portfolio">
+        <div class="container">
+
+                <div class="col-lg-12 text-center">
+                    <h2>Portfolio</h2>
+                    <hr class="star-primary">
+                    <div id="main">
+                        <div class="contentbox">
+                            <form id="input">
 
 
-                        <div id="oldcode"></div>
-                        <div id ="newcode">
-                            <textarea onkeyup="return change(this.value);" name="code" id="code" rows="80" cols="20"></textarea>
+
+                                <div id="left">
+
+
+                                    <div id="textOutput"></div>
+                                    <div id="gamearea"></div>
+
+
+                                </div>
+
+                                <div id ="right">
+
+
+                                    <div id="oldcode"></div>
+                                    <div id ="newcode">
+                                        <textarea onkeyup="return change(this.value);" name="code" id="code" rows="80" cols="20"></textarea>
+                                    </div>
+                                    <div id ="run">
+                                        <a onClick="run();" class="btn btn-lg btn-outline">
+                                            Run
+                                        </a>
+                                        <a onClick="" class="btn btn-lg btn-outline">
+                                            Reset
+                                        </a>
+                                    </div>
+
+
+
+                                </div>
+
+
+
+
+
+                            </form>
                         </div>
-                        <div id ="run">
-                            <input type="button" onClick="run();" value="run" style="font-weight: bold;"/>
-                        </div>
-                    </div>
-
-
-
-
-
-            </form>
                     </div>
                 </div>
 
 
+
         </div>
-    <div id="footer"></div>
+
+    </section>
+    <!-- Footer -->
+    <footer class="text-center">
+        <div class="footer-above">
+            <div class="container">
+                <div class="row">
+                    <div class="footer-col col-md-4">
+                        <h3>Location</h3>
+                        <p>3481 Melrose Place<br>Beverly Hills, CA 90210</p>
+                    </div>
+                    <div class="footer-col col-md-4">
+                        <h3>Around the Web</h3>
+                        <ul class="list-inline">
+                            <li>
+                                <a href="#" class="btn-social btn-outline"><i class="fa fa-fw fa-facebook"></i></a>
+                            </li>
+                            <li>
+                                <a href="#" class="btn-social btn-outline"><i class="fa fa-fw fa-google-plus"></i></a>
+                            </li>
+                            <li>
+                                <a href="#" class="btn-social btn-outline"><i class="fa fa-fw fa-twitter"></i></a>
+                            </li>
+                            <li>
+                                <a href="#" class="btn-social btn-outline"><i class="fa fa-fw fa-linkedin"></i></a>
+                            </li>
+                            <li>
+                                <a href="#" class="btn-social btn-outline"><i class="fa fa-fw fa-dribbble"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="footer-col col-md-4">
+                        <h3>About Freelancer</h3>
+                        <p>Freelance is a free to use, open source Bootstrap theme created by <a href="http://startbootstrap.com">Start Bootstrap</a>.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-below">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        Copyright &copy; Your Website 2014
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+    <script src="bootstrap/dist/js/classie.js"></script>
+    <script src="bootstrap/dist/js/cbpAnimatedHeader.js"></script>
+
+    <!-- Contact Form JavaScript -->
+    <script src="bootstrap/dist/js/jqBootstrapValidation.js"></script>
+
+
+    <!-- Custom Theme JavaScript -->
+    <script src="bootstrap/dist/js/freelancer.js"></script>
     </body>
 </html>
