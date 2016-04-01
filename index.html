@@ -164,13 +164,16 @@ and open the template in the editor.
                         <a href="#page-top"></a>
                     </li>
                     <li class="page-scroll">
-                        <a href="#portfolio">About</a>
+                        <a href="#About">About</a>
                     </li>
                     <li class="page-scroll">
-                        <a href="#about">Play Game</a>
+                        <a href="#playGame">Play Game</a>
                     </li>
                     <li class="page-scroll">
-                        <a href="#contact">Help</a>
+                        <a href="#contact" data-toggle="modal" data-target="#myModal">Help</a>
+                    </li>
+                    <li class="page-scroll">
+                        <a href="#Admin">Admin</a>
                     </li>
                 </ul>
             </div>
@@ -186,11 +189,15 @@ and open the template in the editor.
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <img class="img-responsive" src="img/profile.png" alt="">
+
                     <div class="intro-text">
                         <span class="name">The Maze Game</span>
                         <hr class="star-light">
-                        <span class="skills">A Logo Programming Game</span>
+                        <span class="skills">A Logo Programming Game</span></br>
+                        <a href="#playGame" class="btn btn-lg btn-outline">
+                            Play Game
+                        </a>
+
 
                 </div>
             </div>
@@ -198,17 +205,37 @@ and open the template in the editor.
     </header>
 
 
+    <section id="About">
+        <div class="container">
+
+            <div class="col-lg-12 text-center">
+                <h2>About</h2>
+                <hr class="star-primary">
+                </div>
+            </div>
+        </section>
 
 
-
-    <section id="portfolio">
+    <section id="playGame">
         <div class="container">
 
                 <div class="col-lg-12 text-center">
-                    <h2>Portfolio</h2>
+                    <h2>Maze Game</h2>
                     <hr class="star-primary">
+                    <div id="exTab1" class="container">
+                        <ul  class="nav nav-pills">
+                            <li class="active">
+                                <a  href="#1a" data-toggle="tab">Solo Game</a>
+                            </li>
+                            <li><a href="#2a" data-toggle="tab">Practice</a>
+                            </li>
+                            <li><a href="#3a" data-toggle="tab">Tournament</a>
+
+                        </ul>
+                    </div>
                     <div id="main">
                         <div class="contentbox">
+
                             <form id="input">
 
 
@@ -237,6 +264,11 @@ and open the template in the editor.
                                             Reset
                                         </a>
                                     </div>
+                                    <div id="help">
+                                        <a href="#playGame" class="btn btn-lg btn-outline"  data-toggle="modal" data-target="#myModal">
+                                            Help
+                                        </a>
+                                    </div>
 
 
 
@@ -255,7 +287,50 @@ and open the template in the editor.
 
         </div>
 
+
     </section>
+
+    <!-- Help pop up window -->
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Instructions</h4>
+                </div>
+                <div class="modal-body">
+
+                    <b>Movement</b>
+                    <li><i class="fa fa-arrow-up"></i> - forward 5 (fd 5)</li>
+                    <li><i class="fa fa-arrow-down"></i> - backward 5 (bk 5)</li>
+                    <b>Rotate</b>
+                    <li><i class="fa fa-arrow-left"></i> - right 90 (lt 90)</li>
+                    <li><i class="fa fa-arrow-right"></i> - right 90 (rt 90)</li>
+                    <b>Control</b>
+                    <li>repeat expr [statements...]- repeats statements in [] expr times</li>
+                    <li>forever expr [statements...] - repeats statements in []</li>
+                    <li>if expr [statements...] - run statement if expr is not 0)</li>
+                    <li>ifelse expr[ statements ... ][ statements ... ] - run 1st statements if expr true else run second</li>
+                    <li>while expr [ statements ...] - run statement while expr is not 0)</li>
+
+
+                    <p>Some commands have been disabled for the game</p>
+                    <p>Full list of commands: </p>
+                    <a href="https://turtleacademy.com/playground/en" target="_blank">Go Here</a>
+
+
+                </div>
+                <div class="modal-footer">
+
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
     <!-- Footer -->
     <footer class="text-center">
         <div class="footer-above">

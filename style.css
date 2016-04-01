@@ -29,6 +29,30 @@ and open the template in the editor.
 
 
 }
+#exTab1{
+    width:60%;
+    min-width: 970px;
+    margin:auto;
+
+
+}
+#exTab1 ul {
+
+    background: #232424;
+
+
+}
+#exTab1 a:hover{
+    background: #232424;
+}
+#exTab1  #nav  .active{
+    background: #1b1c1c;
+}
+#exTab1 .nav-pills > li > a {
+    border-radius: 0;
+}
+
+
 
 
 
@@ -114,6 +138,10 @@ width: 100%;
     float: left;
     margin-top: -5px;
 
+}
+#help{
+    float: right;
+    margin-top: -5px;
 }
 .player{
 

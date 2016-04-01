@@ -368,7 +368,10 @@ Player.prototype.reset = function () {
 
     this.setup();
 
-}
+};
+Player.prototype.home = function(){
+    this.setup();
+};
 
 //players starting position
 Player.prototype.setup = function () {

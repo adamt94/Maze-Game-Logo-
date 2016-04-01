@@ -119,7 +119,7 @@ GenerateMaze.prototype.Carve = function(x,y,maze){
         var y1 = y + directionsY[dir];
         var x2 = x1 + directionsX[dir];
         var y2 = y1 + directionsY[dir];
-        //check if the next 2 cells have a wall and orginal cell has been visited
+        //check if the next 2 cells have a wall and  cell has been visited
         if(maze[x1][y1]==this.WALL && maze[x2][y2]== this.WALL&&maze[x][y]==0)
         {
             //change the cells to a space
