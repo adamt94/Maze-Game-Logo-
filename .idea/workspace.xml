@@ -2,13 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f1d19791-9de6-470c-b849-d552bc36b2ab" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Questiongui.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MazeGeneration.js" afterPath="$PROJECT_DIR$/MazeGeneration.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bootstrap/dist/css/bootstrap.min.css" afterPath="$PROJECT_DIR$/bootstrap/dist/css/bootstrap.min.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Questiongui.html" afterPath="$PROJECT_DIR$/Questiongui.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.html" afterPath="$PROJECT_DIR$/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/style.css" afterPath="$PROJECT_DIR$/style.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/turtle.js" afterPath="$PROJECT_DIR$/turtle.js" />
     </list>
     <ignored path="maze_game_3yp.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -30,21 +26,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.3755924">
-              <caret line="309" column="81" selection-start-line="309" selection-start-column="81" selection-end-line="309" selection-end-column="81" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="bootstrap.min.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/bootstrap/dist/css/bootstrap.min.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="178.33963">
-              <caret line="10" column="110294" selection-start-line="10" selection-start-column="110294" selection-end-line="10" selection-end-column="110294" />
+            <state vertical-scroll-proportion="-17.423077">
+              <caret line="28" column="8" selection-start-line="28" selection-start-column="8" selection-end-line="28" selection-end-column="39" />
               <folding />
             </state>
           </provider>
@@ -53,18 +39,8 @@
       <file leaf-file-name="turtle.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/turtle.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-11.413794">
+            <state vertical-scroll-proportion="0.0">
               <caret line="373" column="2" selection-start-line="373" selection-start-column="2" selection-end-line="373" selection-end-column="2" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Questiongui.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Questiongui.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-2.6153846">
-              <caret line="4" column="16" selection-start-line="4" selection-start-column="11" selection-end-line="4" selection-end-column="16" />
               <folding />
             </state>
           </provider>
@@ -83,9 +59,23 @@
       <file leaf-file-name="style.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/style.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-23.538462">
+            <state vertical-scroll-proportion="-0.65384614">
               <caret line="54" column="0" selection-start-line="54" selection-start-column="0" selection-end-line="54" selection-end-column="0" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Questiongui.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Questiongui.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.8187204">
+              <caret line="128" column="99" selection-start-line="128" selection-start-column="99" selection-end-line="128" selection-end-column="99" />
+              <folding>
+                <element signature="n#style#0;n#button#0;n#div#2;n#form#0;n#div#0;n#div#0;n#div#1;n#div#0;n#section#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <marker date="1459637479674" expanded="true" signature="656:869" placeholder="..." />
+                <marker date="1459637479674" expanded="true" signature="851:869" placeholder="..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -112,11 +102,11 @@
       <list>
         <option value="$PROJECT_DIR$/bootstrap/dist/css/freelancer.min.css" />
         <option value="$PROJECT_DIR$/MazeGeneration.js" />
-        <option value="$PROJECT_DIR$/Questiongui.html" />
         <option value="$PROJECT_DIR$/turtle.js" />
         <option value="$PROJECT_DIR$/bootstrap/dist/css/bootstrap.min.css" />
         <option value="$PROJECT_DIR$/style.css" />
         <option value="$PROJECT_DIR$/index.html" />
+        <option value="$PROJECT_DIR$/Questiongui.html" />
       </list>
     </option>
   </component>
@@ -156,9 +146,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -193,6 +180,9 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -681,16 +671,17 @@
       <workItem from="1459285134398" duration="726000" />
       <workItem from="1459367671771" duration="4846000" />
       <workItem from="1459423574264" duration="12061000" />
-      <workItem from="1459513370085" duration="6689000" />
+      <workItem from="1459513370085" duration="7287000" />
+      <workItem from="1459629761317" duration="6510000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="57569000" />
+    <option name="totallyTimeSpent" value="64677000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -1081,6 +1072,21 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="8.0188675">
           <caret line="3" column="8329" selection-start-line="3" selection-start-column="8329" selection-end-line="3" selection-end-column="8329" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bootstrap/dist/css/bootstrap.min.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="168.69812">
+          <caret line="10" column="110294" selection-start-line="10" selection-start-column="110294" selection-end-line="10" selection-end-column="110294" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-17.423077">
+          <caret line="28" column="8" selection-start-line="28" selection-start-column="8" selection-end-line="28" selection-end-column="39" />
           <folding />
         </state>
       </provider>
@@ -1093,43 +1099,31 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Questiongui.html">
+    <entry file="file://$PROJECT_DIR$/style.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.6153846">
-          <caret line="4" column="16" selection-start-line="4" selection-start-column="11" selection-end-line="4" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bootstrap/dist/css/bootstrap.min.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="178.33963">
-          <caret line="10" column="110294" selection-start-line="10" selection-start-column="110294" selection-end-line="10" selection-end-column="110294" />
+        <state vertical-scroll-proportion="-0.65384614">
+          <caret line="54" column="0" selection-start-line="54" selection-start-column="0" selection-end-line="54" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/turtle.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-11.413794">
+        <state vertical-scroll-proportion="0.0">
           <caret line="373" column="2" selection-start-line="373" selection-start-column="2" selection-end-line="373" selection-end-column="2" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/style.css">
+    <entry file="file://$PROJECT_DIR$/Questiongui.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-23.538462">
-          <caret line="54" column="0" selection-start-line="54" selection-start-column="0" selection-end-line="54" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3755924">
-          <caret line="309" column="81" selection-start-line="309" selection-start-column="81" selection-end-line="309" selection-end-column="81" />
-          <folding />
+        <state vertical-scroll-proportion="0.8187204">
+          <caret line="128" column="99" selection-start-line="128" selection-start-column="99" selection-end-line="128" selection-end-column="99" />
+          <folding>
+            <element signature="n#style#0;n#button#0;n#div#2;n#form#0;n#div#0;n#div#0;n#div#1;n#div#0;n#section#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <marker date="1459637479674" expanded="true" signature="656:869" placeholder="..." />
+            <marker date="1459637479674" expanded="true" signature="851:869" placeholder="..." />
+          </folding>
         </state>
       </provider>
     </entry>
