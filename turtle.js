@@ -1,12 +1,51 @@
 //var temp = [];
 var game;
+var rand;
 $(document).ready(function(){
 
 
 
 
 
+    //check if its the right answer when they submit
+    $("#answer").click(function(){
+        //check if ticker radio is right answer
+        var radioValue = $('input:radio:checked').next('label:first').html()
+        if(radioValue==myArray[rand].rAnswer){
+            $('#questionWindow').modal('hide');
+        }else{
+            //display a different question
+            var a = Math.seededRandom(2,0);
+            rand = Math.round(a);
+            $("#questiontitle").html(myArray[rand].Question);
+            $('label[for=test1]').html(myArray[rand].fAnswer);
+            $('label[for=test2]').html(myArray[rand].rAnswer);
+
+        }
+
+     });
+    //$("#answer").click(function(){
+    //    $('#questionWindow').modal('hide');
+    //});
+
+
 });
+//opens a Question
+function openQuestion(){
+    var a =  Math.seededRandom(2,0);
+    rand = Math.round(a);
+    $("#questiontitle").html(myArray[rand].Question);
+    $('label[for=test1]').html(myArray[rand].fAnswer);
+    $('label[for=test2]').html(myArray[rand].rAnswer);
+    //stops window being dismissed
+    $('#questionWindow').modal({
+        keyboard: false,
+        backdrop: false,
+    })
+
+}
+
+
 
 
 //jquery get is asynchronous function to stop this when getting file
@@ -163,6 +202,37 @@ function Wall(xpos,ypos){
     this.height = 20;
 
 }
+
+function Question(xpos,ypos){
+    this.x = xpos;
+    this.y = ypos;
+    this.width = 20;
+    this.height = 20;
+
+
+}
+
+function getQuestions(){
+    var question= [];
+    for(var i =0; i<6; i++) {
+        var x,y;
+        //only adds questions in random sections
+        if(i%2==0) {
+             x = Math.seededRandom(10, 0);
+             y = Math.seededRandom(10, 0);
+        }else{
+            x = Math.seededRandom(20, 10);
+            y = Math.seededRandom(20, 10);
+        }
+        x = Math.round(x);
+        y =Math.round(y);
+
+        question[i] = new Question(x*20,y*20);
+        drawElement("Question",x*20,y*20,0);
+    }
+    return question;
+}
+
 //object that defines a finish line
 function Finish(xpos, ypos, last){
     this.x = xpos;
@@ -198,7 +268,7 @@ function drawElement(classname, xpos, ypos, angle) {
 
 
 //functions that creates a player which setup its starting position
-function Player(walls,height,width,endpoints) {
+function Player(walls,height,width,endpoints,questions) {
 
         //height and length of the area
         this.max_x = height;
@@ -212,6 +282,7 @@ function Player(walls,height,width,endpoints) {
         this.previousPosition =[this.x,this.y,this.angle];
         this.endpoint = endpoints;
         this.walled = walls;
+        this.question = questions;
     //    console.log(this.walled[0]);
 
         this.setup();
@@ -280,6 +351,16 @@ Player.prototype.update = function () {
             }
             drawElement("player", this.x, this.y, this.angle);
         }
+    }
+    for(var i =0; i<this.question.length; i++){
+
+        if(checkCollision(this.x,this.y,this.height,this.width,this.question[i].x,this.question[i].y,this.question[i].height,this.question[i].width)) {
+            //remove the question so it doesnt appear again
+            this.question.splice(i,1);
+            openQuestion();
+
+        }
+
     }
 
 
@@ -396,6 +477,8 @@ DelayCommand.prototype.call = function (that) {
     return this.fun.apply(this.that, this.args);
 };
 
+
+
 //This method creates the player and uses pipeline which contains all the player movement commands
 function Game() {
      var maze = new GenerateMaze(13,13,1);
@@ -412,14 +495,27 @@ function Game() {
  //   this.level = this.loadlevel();
   //  this.level = Generate(10,10);
     //array of all the maze walls
+    this.question = getQuestions();
     this.walls = this.drawLevel(this.NEmaze,this.NWmaze,this.SEmaze,this.SWmaze);
 
-    this.turtle = new Player(this.walls,this.gameHeight,this.gameWidth,this.endPoints);
+    this.turtle = new Player(this.walls,this.gameHeight,this.gameWidth,this.endPoints,this.question);
     //array for adding the commands giving to it by logo
     this.pipeline = null;
     this.active = false;
     this.halt = false;
     this.speed = 250;
+
+
+
+
+
+        for(var i = 0; i < myArray.length; i++) {
+            console.log(myArray[i].Question);
+
+        }
+
+
+
 
     //setups the game, draws the level and player, board size.
 
@@ -540,3 +636,27 @@ Game.prototype.sety = function () {
 Game.prototype.home = function () {
     this.addCommand(this.turtle.home, arguments);
 };
+
+
+
+/*QUESTIONS */
+
+
+
+var myArray = [
+    {
+        "Question": "What is 2+2?",
+        "fAnswer": "1",
+        "rAnswer": "2"
+    },
+    {
+        "Question": "What is 24+2?",
+        "fAnswer": "1",
+        "rAnswer": "26"
+    },
+    {
+        "Question": "What is 2231+2?",
+        "rAnswer": "2233",
+        "fAnswer": "2"
+    }
+];

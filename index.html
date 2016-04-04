@@ -13,10 +13,12 @@ and open the template in the editor.
         <link rel="stylesheet" type="text/css" href="style.css">
 
         <script src="jquery.js"></script>
+
         <script type="text/javascript" src="MazeGeneration.js"></script>
         <script type="text/javascript" src="turtle.js"></script>
         <script type="text/javascript" src="parser.js"></script>
         <script type="text/javascript" src="logo.js"></script>
+
 
         <!-- Bootstrap Core CSS - Uses Bootswatch Flatly Theme: http://bootswatch.com/flatly/ -->
         <link href="bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -265,7 +267,7 @@ and open the template in the editor.
                                         </a>
                                     </div>
                                     <div id="help">
-                                        <a href="#playGame" class="btn btn-lg btn-outline"  data-toggle="modal" data-target="#myModal">
+                                        <a href="#playGame" class="btn btn-lg btn-outline" data-toggle="modal" data-target="#myModal"  >
                                             Help
                                         </a>
                                     </div>
@@ -301,19 +303,25 @@ and open the template in the editor.
                     <h4 class="modal-title">Instructions</h4>
                 </div>
                 <div class="modal-body">
-
+                    <div class="row">
+                        <div class="col-md-4">
                     <b>Movement</b>
                     <li><i class="fa fa-arrow-up"></i> - forward 5 (fd 5)</li>
                     <li><i class="fa fa-arrow-down"></i> - backward 5 (bk 5)</li>
                     <b>Rotate</b>
                     <li><i class="fa fa-arrow-left"></i> - right 90 (lt 90)</li>
                     <li><i class="fa fa-arrow-right"></i> - right 90 (rt 90)</li>
+                            </div>
+
+                        <div class=".col-md-3 .col-md-offset-3">
                     <b>Control</b>
                     <li>repeat expr [statements...]- repeats statements in [] expr times</li>
                     <li>forever expr [statements...] - repeats statements in []</li>
                     <li>if expr [statements...] - run statement if expr is not 0)</li>
-                    <li>ifelse expr[ statements ... ][ statements ... ] - run 1st statements if expr true else run second</li>
+                    <li>ifelse expr[ statements ... ][ statements ... ] </li>
                     <li>while expr [ statements ...] - run statement while expr is not 0)</li>
+                        </div>
+                    </div>
 
 
                     <p>Some commands have been disabled for the game</p>
@@ -324,7 +332,44 @@ and open the template in the editor.
                 </div>
                 <div class="modal-footer">
 
+
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- Help pop up window -->
+    <div id="questionWindow" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+
+                    <h4 class="modal-title">Question</h4>
+                </div>
+                <div class="modal-body">
+
+                    <div id="#qinput">
+                        <div id="questiontitle"></div>
+                        <form>
+
+                            <div id="TheOptions">
+                                <input type="radio" id="test1" name="mylist"/><label for="test1">option 1</label><br>
+                                <input type="radio" id="test2" name="mylist"/><label for="test2">option 2</label><br>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+
+                    <button type="button" id="answer" class="btn btn-default">Close</button>
                 </div>
             </div>
 
