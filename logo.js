@@ -485,11 +485,13 @@ Logo.prototype.run = function (code) {
         if (i.type == "eof") break;
         
         var out = this.eval(i);
+
         if (out && out.type == "error") {ret = out; break;}
         
     } while (1);
     
     this.turtle.finish();
+
     return ret;
 }
 

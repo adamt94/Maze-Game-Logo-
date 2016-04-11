@@ -13,6 +13,7 @@ $(document).ready(function(){
         var radioValue = $('input:radio:checked').next('label:first').html()
         if(radioValue==myArray[rand].rAnswer){
             $('#questionWindow').modal('hide');
+            
         }else{
             //display a different question
             var a = Math.seededRandom(2,0);
@@ -278,7 +279,7 @@ function Player(walls,height,width,endpoints,questions) {
         this.y = this.max_y / 2;
         this.width = 19;
         this.height = 19;
-        //players previous position 
+        //players previous position
         this.previousPosition =[this.x,this.y,this.angle];
         this.endpoint = endpoints;
         this.walled = walls;
@@ -286,7 +287,7 @@ function Player(walls,height,width,endpoints,questions) {
     //    console.log(this.walled[0]);
 
         this.setup();
-    
+
 }
 
 //returns the players previous position
@@ -294,10 +295,10 @@ Player.prototype.saveState = function(x, y,angle){
     this.previousPosition[0] =x;
     this.previousPosition[1]=y;
     this.previousPosition[2]=angle;
-    
+
 };
 Player.prototype.getState = function(){
-    
+
     return  this.previousPosition;
 };
 
@@ -306,74 +307,79 @@ Player.prototype.getState = function(){
 //removes previously drawn object and draws the new player position
 Player.prototype.update = function () {
 
-        $("div.player").remove();
-   for(var i =0; i< this.walled.length; i++) {
-    //    for (var j = 0; j < this.walled[i].length; j++) {
+  $("div.player").remove();
+    //check is its pratice mode as no walls (needs to be changed moving collision detection to game function soon)
+   if(!this.walled){
+       drawElement("player", this.x, this.y, this.angle);
+   }else {
+       for (var i = 0; i < this.walled.length; i++) {
+           //    for (var j = 0; j < this.walled[i].length; j++) {
 
 
-            if (!checkCollision(this.x, this.y, this.height, this.width, this.walled[i].x, this.walled[i].y, this.walled[i].height,this.walled[i].width)
-                ) {
-                drawElement("player", this.x, this.y, this.angle);
+           if (!checkCollision(this.x, this.y, this.height, this.width, this.walled[i].x, this.walled[i].y, this.walled[i].height, this.walled[i].width)
+           ) {
+               drawElement("player", this.x, this.y, this.angle);
 
-            }
-            else {
-                //there was a collision reset player to previous position
-                $("div.player").remove();
-                drawElement("player", this.previousPosition[0], this.previousPosition[1], this.previousPosition[2]);
-                this.x = this.previousPosition[0];
-                this.y = this.previousPosition[1];
-                this.angle = this.previousPosition[2];
-              //  console.log(this.x + "  " + this.y + "   " + this.angle)
-            //    console.log(this.walled[i].x+"  "+this.walled[i].y);
+           }
+           else {
+               //there was a collision reset player to previous position
+               $("div.player").remove();
+               drawElement("player", this.previousPosition[0], this.previousPosition[1], this.previousPosition[2]);
+               this.x = this.previousPosition[0];
+               this.y = this.previousPosition[1];
+               this.angle = this.previousPosition[2];
+               //  console.log(this.x + "  " + this.y + "   " + this.angle)
+               //    console.log(this.walled[i].x+"  "+this.walled[i].y);
 
-            }
-     //   }
-    }
+           }
+           //   }
+       }
 
-    ///check is player is at a finish point
+       ///check is player is at a finish point
 
-    for(var i =0; i<this.endpoint.length; i++){
+       for (var i = 0; i < this.endpoint.length; i++) {
 
-        if(checkCollision(this.x,this.y,this.height,this.width,this.endpoint[i].x,this.endpoint[i].y,this.endpoint[i].height,this.endpoint[i].width)){
-            $("div.player").remove();
-            //teleports plays to next starting point
-            if(i ==0) {
-                this.x = 240;
-                this.y = 0;
-            }
-            if(i==1){
-                this.x = 0;
-                this.y =240;
-            }
-            if(i==2){
-                this.x=240;
-                this.y =240;
-            }
-            drawElement("player", this.x, this.y, this.angle);
-        }
-    }
-    for(var i =0; i<this.question.length; i++){
+           if (checkCollision(this.x, this.y, this.height, this.width, this.endpoint[i].x, this.endpoint[i].y, this.endpoint[i].height, this.endpoint[i].width)) {
+               $("div.player").remove();
+               //teleports plays to next starting point
+               if (i == 0) {
+                   this.x = 240;
+                   this.y = 0;
+               }
+               if (i == 2) {
+                   this.x = 0;
+                   this.y = 240;
+               }
+               if (i == 3) {
+                   this.x = 240;
+                   this.y = 240;
+               }
+               drawElement("player", this.x, this.y, this.angle);
+           }
+       }
+       for (var i = 0; i < this.question.length; i++) {
 
-        if(checkCollision(this.x,this.y,this.height,this.width,this.question[i].x,this.question[i].y,this.question[i].height,this.question[i].width)) {
-            //remove the question so it doesnt appear again
-            this.question.splice(i,1);
-            openQuestion();
+           if (checkCollision(this.x, this.y, this.height, this.width, this.question[i].x, this.question[i].y, this.question[i].height, this.question[i].width)) {
+               //remove the question so it doesnt appear again
+               this.question.splice(i, 1);
+               openQuestion();
 
-        }
+           }
 
-    }
+       }
+   }
 
 
 
 
        // this.sprite.setAttribute('transform', 'rotate(' + (this.angle) + ' 10 10)');
-  
+
 };
 
 
 //set the players x and y position
 Player.prototype.setxy = function (x, y) {
-   
+
     this.x = x;
     this.y = y;
     this.update();
@@ -395,21 +401,21 @@ Player.prototype.sety = function (x, y) {
 
 //method for moving the player foward
 Player.prototype.forward = function (d) {
-    
+
     this.saveState(this.x,this.y,this.angle);
-    
+
     this.crawl(d);
 };
 
 //method moves a player foward accounting for angle its facing
 Player.prototype.crawl = function (d) {
-    //move at 10 pixels at a time
+    //move at 20 pixels at a time
     d = d*20;
 
     var newx = this.x + d * Math.cos(this.radians());
     var newy = this.y + d * Math.sin(this.radians());
 
- 
+
 
 
     this.x = newx;
@@ -456,7 +462,7 @@ Player.prototype.home = function(){
 
 //players starting position
 Player.prototype.setup = function () {
-   
+
     this.x = 0;
     this.y = 0;
     this.angle = 270;
@@ -480,23 +486,26 @@ DelayCommand.prototype.call = function (that) {
 
 
 //This method creates the player and uses pipeline which contains all the player movement commands
-function Game() {
+function Game(ispractice) {
      var maze = new GenerateMaze(13,13,1);
     this.gameHeight = 460;
     this.gameWidth= 460;
-    //reads in the data for level from file
-    this.level =  maze.data;
-    //each maze section
-    this.NEmaze = this.loadlevel();
-    this.NWmaze = maze.data;
-    this.SWmaze = this.loadlevel();
-    this.SEmaze = maze.data3;
-    this.endPoints = this.getFinishPoints();
- //   this.level = this.loadlevel();
-  //  this.level = Generate(10,10);
-    //array of all the maze walls
-    this.question = getQuestions();
-    this.walls = this.drawLevel(this.NEmaze,this.NWmaze,this.SEmaze,this.SWmaze);
+
+    if(!ispractice) {
+        //reads in the data for level from file
+        this.level = maze.data;
+        //each maze section
+        this.NEmaze = this.loadlevel();
+        this.NWmaze = maze.data;
+        this.SWmaze = this.loadlevel();
+        this.SEmaze = maze.data3;
+        this.endPoints = this.getFinishPoints();
+        //   this.level = this.loadlevel();
+        //  this.level = Generate(10,10);
+        //array of all the maze walls
+        this.question = getQuestions();
+        this.walls = this.drawLevel(this.NEmaze, this.NWmaze, this.SEmaze, this.SWmaze);
+    }
 
     this.turtle = new Player(this.walls,this.gameHeight,this.gameWidth,this.endPoints,this.question);
     //array for adding the commands giving to it by logo
@@ -589,7 +598,7 @@ Game.prototype.paint = function () {
 
 
 Game.prototype.addCommand = function (fun, args) {
-    
+
     this.pipeline.push(new DelayCommand(this.turtle, fun, args));
 };
 
@@ -598,15 +607,15 @@ Game.prototype.addCommand = function (fun, args) {
 Game.prototype.forward = function (d) {
         this.turtle.saveState(this.turtle.x,this.turtle.y,this.turtle.angle);
         var l = Math.abs(d);
-        
+
         var s = l / d;
-      
+
         //moves the player foward 1 bit at a time
         for (var i = 0; i < l; i++) {
             this.addCommand(this.turtle.crawl, [s]);
         }
        // this.addCommand(this.turtle.forward,arguments);
-     
+
 };
 Game.prototype.backward = function (d) {
     this.forward(-d);
