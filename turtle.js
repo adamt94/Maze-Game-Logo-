@@ -373,7 +373,7 @@ Player.prototype.update = function (isopponent) {
     if(isopponent !== true){
         MazeClient.makeMove({"x": this.x, "y": this.y, "d": this.angle},"forward",function(x){
            if(x['result']['success']===false){
-                drawElement("player", this.getState[0], this.getState[1], this.getState[2]);
+                drawElement("player", this.previousPosition[0], this.previousPosition[1], this.previousPosition[2]);
            } 
         });
     }
