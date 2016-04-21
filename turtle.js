@@ -305,8 +305,8 @@ Player.prototype.getState = function(){
 
 
 //removes previously drawn object and draws the new player position
-Player.prototype.update = function () {
-
+Player.prototype.update = function (isopponent) {
+ 
   $("div.player").remove();
     //check is its pratice mode as no walls (needs to be changed moving collision detection to game function soon)
    if(!this.walled){
@@ -370,7 +370,13 @@ Player.prototype.update = function () {
    }
 
 
-
+    if(isopponent !== true){
+        MazeClient.makeMove({"x": this.x, "y": this.y, "d": this.angle},"forward",function(x){
+           if(x['result']['success']===false){
+                drawElement("player", this.getState[0], this.getState[1], this.getState[2]);
+           } 
+        });
+    }
 
        // this.sprite.setAttribute('transform', 'rotate(' + (this.angle) + ' 10 10)');
 
@@ -487,10 +493,20 @@ DelayCommand.prototype.call = function (that) {
 
 //This method creates the player and uses pipeline which contains all the player movement commands
 function Game(ispractice) {
-     var maze = new GenerateMaze(13,13,1);
+     this.seed = 1;
+     this.gameOn = false;
+     MazeClient.newSession("multi","test",this.seed, function(res){
+        if(res !== false){
+            if(res.result.ready !== false){
+                this.seed = res.result.seed;
+            }
+        }
+    });
+     var maze = new GenerateMaze(13,13,this.seed);
+     
     this.gameHeight = 460;
     this.gameWidth= 460;
-
+    
     if(!ispractice) {
         //reads in the data for level from file
         this.level = maze.data;
@@ -506,15 +522,17 @@ function Game(ispractice) {
         this.question = getQuestions();
         this.walls = this.drawLevel(this.NEmaze, this.NWmaze, this.SEmaze, this.SWmaze);
     }
+    
 
     this.turtle = new Player(this.walls,this.gameHeight,this.gameWidth,this.endPoints,this.question);
+    this.opponent = new Player(this.walls,this.gameHeight,this.gameWidth,this.endPoints,this.question);
     //array for adding the commands giving to it by logo
     this.pipeline = null;
     this.active = false;
     this.halt = false;
     this.speed = 250;
 
-
+    
 
 
 
@@ -523,7 +541,7 @@ function Game(ispractice) {
 
         }
 
-
+    
 
 
     //setups the game, draws the level and player, board size.
@@ -644,6 +662,38 @@ Game.prototype.sety = function () {
 
 Game.prototype.home = function () {
     this.addCommand(this.turtle.home, arguments);
+};
+
+
+
+
+Game.prototype.pollStatus = function() {
+	var tId;
+	var myVar;
+
+	MazeClient.getState(MazeClient.sessionID, function (res) {
+		console.log(res);
+		if (!this.gameOn && res.result.state == 1) {
+			console.log("game started!");
+			
+			
+			this.gameOn = true;
+		}
+		if (res.result.opp !== null) {
+		
+                        this.opponent.x = res.result.opp.X;
+                        this.opponent.y = res.result.opp.Y;
+                        this.opponent.angle = res.result.opp.heading;
+                       
+                        this.opponent.update(true);
+			console.log("updated opponent");
+		}
+	}.bind(this));
+
+	tId = setTimeout(function () {
+		pollStatus();
+	}, 500);
+
 };
 
 
