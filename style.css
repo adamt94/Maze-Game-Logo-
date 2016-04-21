@@ -3,7 +3,7 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 */
-/* 
+/*
     Created on : 14-Sep-2015, 14:57:53
     Author     : ypf12pxu
 */
@@ -146,9 +146,12 @@ width: 100%;
 }
 .player{
 
-    height: 20px;
-    width: 20px;
-    background: #ff723f;
+  width: 0;
+height: 0;
+border-style: solid;
+border-width: 10px 0 10px 20px;
+border-color: transparent transparent transparent #ff723f;
+
     position: absolute;
 }
 
@@ -172,4 +175,3 @@ width: 100%;
     position: absolute;
 
 }
-
