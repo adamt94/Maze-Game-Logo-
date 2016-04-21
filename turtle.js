@@ -472,6 +472,7 @@ Player.prototype.setup = function () {
     this.x = 0;
     this.y = 0;
     this.angle = 270;
+	this.saveState(this.x,this.y,this.angle);
     this.update();
 
 };
