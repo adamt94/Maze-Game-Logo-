@@ -1,10 +1,15 @@
 //var temp = [];
 var game;
 var rand;
+var multplayercheck = false;
 $(document).ready(function(){
 
-
-
+    //check the page is multiplayer to activate mazeclient
+    var href = document.location.href;
+    var lastPathSegment = href.substr(href.lastIndexOf('/') + 1);
+    if(lastPathSegment == "tournemant.html#playGame"){
+        multplayercheck = true;
+    }
 
 
     //check if its the right answer when they submit
@@ -89,7 +94,12 @@ Game.prototype.loadlevel = function(){
 
 };
 
-//atm return array of wall objects, draws each section to the maze passed through parameter
+/*
+*@param each section of the maze
+* draws each wall to the canvas
+*returns an array of all the walls
+*
+* */
 Game.prototype.drawLevel = function(NE,NW,SE,SW){
      var tempwalls = [];
 
@@ -269,7 +279,7 @@ function drawElement(classname, xpos, ypos, angle) {
 
 
 //functions that creates a player which setup its starting position
-function Player(walls,height,width,endpoints,questions) {
+function Player(height,width) {
 
         //height and length of the area
         this.max_x = height;
@@ -281,9 +291,7 @@ function Player(walls,height,width,endpoints,questions) {
         this.height = 19;
         //players previous position
         this.previousPosition =[this.x,this.y,this.angle];
-        this.endpoint = endpoints;
-        this.walled = walls;
-        this.question = questions;
+
     //    console.log(this.walled[0]);
 
         this.setup();
@@ -309,74 +317,8 @@ Player.prototype.update = function (isopponent) {
  
   $("div.player").remove();
     //check is its pratice mode as no walls (needs to be changed moving collision detection to game function soon)
-   if(!this.walled){
+
        drawElement("player", this.x, this.y, this.angle);
-   }else {
-       for (var i = 0; i < this.walled.length; i++) {
-           //    for (var j = 0; j < this.walled[i].length; j++) {
-
-
-           if (!checkCollision(this.x, this.y, this.height, this.width, this.walled[i].x, this.walled[i].y, this.walled[i].height, this.walled[i].width)
-           ) {
-               drawElement("player", this.x, this.y, this.angle);
-
-           }
-           else {
-               //there was a collision reset player to previous position
-               $("div.player").remove();
-               drawElement("player", this.previousPosition[0], this.previousPosition[1], this.previousPosition[2]);
-               this.x = this.previousPosition[0];
-               this.y = this.previousPosition[1];
-               this.angle = this.previousPosition[2];
-               //  console.log(this.x + "  " + this.y + "   " + this.angle)
-               //    console.log(this.walled[i].x+"  "+this.walled[i].y);
-
-           }
-           //   }
-       }
-
-       ///check is player is at a finish point
-
-       for (var i = 0; i < this.endpoint.length; i++) {
-
-           if (checkCollision(this.x, this.y, this.height, this.width, this.endpoint[i].x, this.endpoint[i].y, this.endpoint[i].height, this.endpoint[i].width)) {
-               $("div.player").remove();
-               //teleports plays to next starting point
-               if (i == 0) {
-                   this.x = 240;
-                   this.y = 0;
-               }
-               if (i == 2) {
-                   this.x = 0;
-                   this.y = 240;
-               }
-               if (i == 3) {
-                   this.x = 240;
-                   this.y = 240;
-               }
-               drawElement("player", this.x, this.y, this.angle);
-           }
-       }
-       for (var i = 0; i < this.question.length; i++) {
-
-           if (checkCollision(this.x, this.y, this.height, this.width, this.question[i].x, this.question[i].y, this.question[i].height, this.question[i].width)) {
-               //remove the question so it doesnt appear again
-               this.question.splice(i, 1);
-               openQuestion();
-
-           }
-
-       }
-   }
-
-
-    if(isopponent !== true){
-        MazeClient.makeMove({"x": this.x, "y": this.y, "d": this.angle},"forward",function(x){
-           if(x['result']['success']===false){
-              //  drawElement("player", this.previousPosition[0], this.previousPosition[1], this.previousPosition[2]);
-           } 
-        });
-    }
 
        // this.sprite.setAttribute('transform', 'rotate(' + (this.angle) + ' 10 10)');
 
@@ -492,17 +434,23 @@ DelayCommand.prototype.call = function (that) {
 
 
 
-//This method creates the player and uses pipeline which contains all the player movement commands
+//This function contains all objects needed for the game
 function Game(ispractice) {
      this.seed = 1;
+    //boolean check for game has started for multiplayer
      this.gameOn = false;
-     MazeClient.newSession("multi","test",this.seed, function(res){
-        if(res !== false){
-            if(res.result.ready !== false){
-                this.seed = res.result.seed;
+    //check multiplayer
+    if(multplayercheck == true) {
+        MazeClient.newSession("multi", "test", this.seed, function (res) {
+            if (res !== false) {
+                if (res.result.ready !== false) {
+                    this.seed = res.result.seed;
+                }
             }
-        }
-    });
+        });
+    }
+
+    //generate random maze
      var maze = new GenerateMaze(13,13,this.seed);
      
     this.gameHeight = 460;
@@ -511,26 +459,30 @@ function Game(ispractice) {
     if(!ispractice) {
         //reads in the data for level from file
         this.level = maze.data;
-        //each maze section
+        //each maze section loadlevel is read in from text file
         this.NEmaze = this.loadlevel();
         this.NWmaze = maze.data;
         this.SWmaze = this.loadlevel();
         this.SEmaze = maze.data3;
+        //finish points data
         this.endPoints = this.getFinishPoints();
         //   this.level = this.loadlevel();
         //  this.level = Generate(10,10);
         //array of all the maze walls
+        //questions
         this.question = getQuestions();
+        //draw the walls and store the walls in walls
         this.walls = this.drawLevel(this.NEmaze, this.NWmaze, this.SEmaze, this.SWmaze);
     }
     
-
-    this.turtle = new Player(this.walls,this.gameHeight,this.gameWidth,this.endPoints,this.question);
-    this.opponent = new Player(this.walls,this.gameHeight,this.gameWidth,this.endPoints,this.question);
+    //create players
+    this.turtle = new Player(this.gameHeight,this.gameWidth);
+    this.opponent = new Player(this.gameHeight,this.gameWidth);
     //array for adding the commands giving to it by logo
     this.pipeline = null;
     this.active = false;
     this.halt = false;
+    //speed which each command is called
     this.speed = 250;
 
     
@@ -549,6 +501,103 @@ function Game(ispractice) {
 
 
 }
+
+
+
+
+
+
+//this method checks if player collided wit any of the tiles
+Game.prototype.checkPlayerCollision = function(){
+    for (var i = 0; i < this.walls.length; i++) {
+        //    for (var j = 0; j < this.walled[i].length; j++) {
+
+
+        if (!checkCollision(this.turtle.x, this.turtle.y, this.turtle.height, this.turtle.width, this.walls[i].x, this.walls[i].y, this.walls[i].height, this.walls[i].width)
+        ) {
+           // drawElement("player", this.x, this.y, this.angle);
+           // console.log(this.turtle.x + "  "+ this.turtle.y+ "  "+ this.turtle.height+ "  "+this.turtle.width+ "  "+this.walls[0].x+ " "this.walls[0].y+ "  "+ this.walls.height);
+
+
+        }
+        //collided with wall
+        else {
+            console.log("COLLISON");
+            //there was a collision reset player to previous position
+           // $("div.player").remove();
+           // drawElement("player", this.turtle.previousPosition[0], this.turtle.previousPosition[1], this.turtle.previousPosition[2]);
+            this.turtle.x = this.turtle.previousPosition[0];
+            this.turtle.y = this.turtle.previousPosition[1];
+            this.turtle.angle = this.turtle.previousPosition[2];
+
+            this.turtle.update();
+            //  console.log(this.x + "  " + this.y + "   " + this.angle)
+            //    console.log(this.walled[i].x+"  "+this.walled[i].y);
+
+        }
+        //   }
+    }
+
+    ///check is player is at a finish point
+
+    for (var i = 0; i < this.endPoints.length; i++) {
+
+        if (checkCollision(this.turtle.x, this.turtle.y, this.turtle.height, this.turtle.width, this.endPoints[i].x, this.endPoints[i].y, this.endPoints[i].height, this.endPoints[i].width)) {
+            $("div.player").remove();
+            //teleports plays to next starting point
+            if (i == 0) {
+                this.turtle.x = 240;
+                this.turtle.y = 0;
+            }
+            if (i == 2) {
+                this.turtle.x = 0;
+                this.turtle.y = 240;
+            }
+            if (i == 3) {
+                this.turtle.x = 240;
+                this.turtle.y = 240;
+            }
+            this.turtle.update();
+        }
+    }
+
+    //check questions collision
+    for (var i = 0; i < this.question.length; i++) {
+
+        if (checkCollision(this.turtle.x, this.turtle.y, this.turtle.height, this.turtle.width, this.question[i].x, this.question[i].y, this.question[i].height, this.question[i].width)) {
+            //remove the question so it doesnt appear again
+            this.question.splice(i, 1);
+            openQuestion();
+
+        }
+
+    }
+
+
+if(multplayercheck == true) {
+    if (isopponent !== true) {
+        MazeClient.makeMove({"x": this.turtle.x, "y": this.turtle.y, "d": this.turtle.angle}, "forward", function (x) {
+            if (x['result']['success'] === false) {
+                //  drawElement("player", this.previousPosition[0], this.previousPosition[1], this.previousPosition[2]);
+            }
+        });
+    }
+
+}
+
+};
+
+
+
+
+
+
+
+
+
+
+
+
 
 Game.prototype.getFinishPoints = function(){
     var finishs =[];
@@ -593,6 +642,7 @@ Game.prototype.paint = function () {
                 //call the method
                 fun.call();
 
+                this.checkPlayerCollision();
                 redraw = true;
 
             } while (this.speed <= 1 && this.pipeline.length > 0)
@@ -608,6 +658,10 @@ Game.prototype.paint = function () {
         }
     }
 };
+
+
+
+
 
 
 /*=========================================================
@@ -676,16 +730,16 @@ Game.prototype.pollStatus = function() {
 		console.log(res);
 		if (!this.gameOn && res.result.state == 1) {
 			console.log("game started!");
-			
-			
+
+
 			this.gameOn = true;
 		}
 		if (res.result.opp !== null) {
-		
+
                         this.opponent.x = res.result.opp.X;
                         this.opponent.y = res.result.opp.Y;
                         this.opponent.angle = res.result.opp.heading;
-                       
+
                         this.opponent.update(true);
 			console.log("updated opponent");
 		}

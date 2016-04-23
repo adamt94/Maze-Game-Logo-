@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>TODO supply a title</title>
     <meta charset="UTF-8">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="style.css">
 
     <script src="jquery.js"></script>
-
+    <script type="text/javascript" src="mazeClient.js"></script>
     <script type="text/javascript" src="MazeGeneration.js"></script>
     <script type="text/javascript" src="turtle.js"></script>
     <script type="text/javascript" src="parser.js"></script>
@@ -25,9 +24,6 @@
 
 
     <script type="text/javascript">
-
-
-
         var turtle = null;
         var logo = null;
         var form;
@@ -49,7 +45,7 @@
             logo = new Logo()
 
 
-            turtle = new Game(true);
+            turtle = new Game();
             logo.setTurtle(turtle);
             logo.setTextOutput(textOutput);
         }
@@ -140,6 +136,7 @@
         }
     </script>
 </head>
+
 <body onload="init();
 
             run();">
@@ -173,8 +170,9 @@
                     <a href="#contact" data-toggle="modal" data-target="#myModal">Help</a>
                 </li>
                 <li class="page-scroll">
-                    <a href="Questiongui.html">Admin</a>
+                    <a href="adminLogin">Admin</a>
                 </li>
+
             </ul>
         </div>
         <!-- /.navbar-collapse -->
@@ -218,6 +216,7 @@
 
 
 <section id="playGame">
+    <div id="testing"></div>
     <div class="container">
 
         <div class="col-lg-12 text-center">
@@ -228,9 +227,9 @@
                     <li>
                         <a  href="index.html#playGame" >Solo Game</a>
                     </li>
-                    <li class="active"><a href="#playGame">Practice</a>
+                    <li><a href="practice.html#playGame">Practice</a>
                     </li>
-                    <li><a href="tournemant.html#playGame">Tournament</a>
+                    <li class="active"><a href="#playGame" data-toggle="tab">Tournament</a>
 
                 </ul>
             </div>
