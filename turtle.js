@@ -642,7 +642,7 @@ Game.prototype.paint = function () {
                 //call the method
                 fun.call();
 
-                this.checkPlayerCollision();
+                this.checkPlayerCollision(false);
                 redraw = true;
 
             } while (this.speed <= 1 && this.pipeline.length > 0)
