@@ -495,7 +495,7 @@ function Game(ispractice) {
         }
 
     
-
+	pollStatus();
 
     //setups the game, draws the level and player, board size.
 
