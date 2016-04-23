@@ -508,7 +508,7 @@ function Game(ispractice) {
 
 
 //this method checks if player collided wit any of the tiles
-Game.prototype.checkPlayerCollision = function(){
+Game.prototype.checkPlayerCollision = function(isopponent){
     for (var i = 0; i < this.walls.length; i++) {
         //    for (var j = 0; j < this.walled[i].length; j++) {
 
