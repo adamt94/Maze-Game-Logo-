@@ -451,7 +451,7 @@ function Game(ispractice) {
 				}
             }
             
-        });
+        }.bind(this));
     }
 
     //generate random maze
