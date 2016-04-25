@@ -16,16 +16,20 @@ function GenerateMaze(height, width,seed){
     this.data3 = this.Generate(this.width, this.height); //setup maze data SE
     this.data4 = this.Generate(this.width,this.height);//setup maze data SW
 
+    //RECURSIVE BACKTRACKER
     this.data[1][1] = this.SPACE; //starting point
     this.data = this.Carve(1,1,this.data); //sstart random gen algorithm
     this.data2[1][1] = this.SPACE; //starting point
     this.data2 = this.Carve(1,1,this.data2);
+
+
+    //KRUSKALS
     this.data3[1][1] = this.SPACE; //starting point
     this.data3 = this.Carve(1,1,this.data3); //sstart random gen algorithm
     this.data4[1][1] = this.SPACE; //starting point
-    this.data4 = this.Carve(1,1,this.data4);
-
-
+    this.data4 = this.KruskalAlgorithm(this.data4);
+ //   this.data4 = this.Carve(1,1,this.data4)
+   // this.KruskalAlgorithm(this.Generate(this.width,this.height));
 
 
 
@@ -67,7 +71,7 @@ GenerateMaze.prototype.Generate = function(width ,height){
             maze[x][y] = this.WALL;
         }
     }
-
+    //2s are created for padding around edges
     //fill border right column
     for(var x = 0; x < width; x++) {
         maze[x][0] = 2;
@@ -149,3 +153,92 @@ Math.seededRandom = function(max, min) {
 
     return min + rnd * (max - min);
 };
+
+GenerateMaze.prototype.KruskalAlgorithm = function(maze){
+    var directionsX = [2,-2,0,0];
+    var directionsY = [0,0,2,-2];
+    var directionsX2 = [1,-1,0,0];
+    var directionsY2 = [0,0,1,-1];
+    var randx;
+    var randy;
+    var dir = Math.seededRandom(3, 0);
+    dir = Math.round(dir);
+    var sets = 3;
+    var finished = false;
+    var edgesx = [];
+    var edgesy = [];
+    var edge = 2;
+    for(var i =0; i < (maze.length-1)/2; i++){
+        edgesx[i] = edge;
+        edge+=2;
+    }
+    edge =2;
+    for(var i =0; i < (maze.length-1)/2; i++){
+        edgesy[i] = edge;
+        edge+=2;
+    }
+    for(var i =0; i<edgesx.length; i++){
+        console.log(edgesx[i]);
+    }
+    for(var c =0; c<10; c++) {
+        for (var i = 0; i < edgesx.length; i++) {
+            for (var j = 0; j < edgesy.length; j++) {
+                dir = Math.seededRandom(3, 0);
+                dir = Math.round(dir);
+                var x = edgesx[i];
+                var y = edgesy[j];
+
+                var x2 = edgesx[i] + directionsX[dir];
+                var y2 = edgesy[j] + directionsY[dir];
+
+                var pathx = edgesx[i] + directionsX2[dir];
+                var pathy = edgesy[j] + directionsY2[dir];
+              //  console.log("x:  " + x +"  "+ y);
+              //  console.log("p:  " + pathx +"  "+ pathy);
+                if (maze[x][y] == this.WALL && maze[x2][y2] == this.WALL) {
+                    maze[x][y] = sets;
+                    maze[pathx][pathy] = 0;
+                    maze[x2][y2] = sets;
+
+                    sets++;
+                }
+                else if (maze[x][y] == this.WALL && maze[x2][y2] > 2) {
+                    maze[x][y] = maze[x2][y2];
+                    maze[pathx][pathy] = 0;
+                }
+                //else if(maze[x2][y2]== this.WALL && maze[x][y] >2){
+                //    maze[x2][y2] = maze[x][y];
+                //}
+                else if (maze[x][y] > 2 && maze[x2][y2] > 2 && maze[x][y] !== maze[x2][y2]) {
+                    maze[pathx][pathy] = 0;
+                    var set = maze[x2][y2];
+                    for (var h = 0; h < maze.length; h++) {
+                        for (var k = 0; k < maze[0].length; k++) {
+                            if (set == maze[h][k]) {
+                                maze[h][k] = maze[x][y];
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    for(var i =0; i<maze.length; i++){
+        s="";
+        for(var j = 0; j<maze[0].length; j++){
+            if(maze[i][j] >2)
+            {
+                maze[i][j] =0;
+            }
+            s+=maze[i][j]+"  ";
+        }
+        console.log(s);
+    }
+        return maze;
+
+};
+
+function set(){
+    this.set = 0;
+}
