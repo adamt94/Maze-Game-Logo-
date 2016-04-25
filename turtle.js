@@ -446,6 +446,10 @@ function Game(ispractice) {
                 if (res.result.ready !== false) {
                     this.seed = res.result.seed;
                 }
+				     if(multplayercheck == true) {
+						this.pollStatus();
+				}
+            }
             }
         });
     }
@@ -494,9 +498,7 @@ function Game(ispractice) {
 
         }
 
-    if(multplayercheck == true) {
-	this.pollStatus();
-}
+
 
     //setups the game, draws the level and player, board size.
 
