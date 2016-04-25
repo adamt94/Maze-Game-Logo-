@@ -154,6 +154,16 @@ border-color: transparent transparent transparent #ff723f;
 
     position: absolute;
 }
+.oponnent{
+
+  width: 0;
+height: 0;
+border-style: solid;
+border-width: 10px 0 10px 20px;
+border-color: transparent transparent transparent #ff723f;
+
+    position: absolute;
+}
 
 .wall{
     height: 19px;

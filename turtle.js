@@ -315,10 +315,17 @@ Player.prototype.getState = function(){
 //removes previously drawn object and draws the new player position
 Player.prototype.update = function (isopponent) {
  
-  $("div.player").remove();
+  
     //check is its pratice mode as no walls (needs to be changed moving collision detection to game function soon)
-
+	if(isopponent){
+	  $("div.oponnent").remove();
+		drawElement("oponnent",this.x,this.y,this.angle);
+	
+	}else{
+	 $("div.player").remove();
        drawElement("player", this.x, this.y, this.angle);
+	   }
+	   
 
        // this.sprite.setAttribute('transform', 'rotate(' + (this.angle) + ' 10 10)');
 
@@ -581,7 +588,7 @@ if(multplayercheck == true) {
     if (isopponent !== true) {
         MazeClient.makeMove({"x": this.turtle.x, "y": this.turtle.y, "d": this.turtle.angle}, "forward", function (x) {
             if (x['result']['success'] === false) {
-                //  drawElement("player", this.previousPosition[0], this.previousPosition[1], this.previousPosition[2]);
+               //   drawElement("player", this.previousPosition[0], this.previousPosition[1], this.previousPosition[2]);
             }
         });
     }
