@@ -450,7 +450,7 @@ function Game(ispractice) {
 						this.pollStatus();
 				}
             }
-            }
+            
         });
     }
 
