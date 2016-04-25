@@ -750,7 +750,7 @@ Game.prototype.pollStatus = function() {
 
 	tId = setTimeout(function () {
 		this.pollStatus();
-	}, 500);
+	}.bind(this), 500);
 
 };
 
