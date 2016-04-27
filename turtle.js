@@ -30,9 +30,7 @@ $(document).ready(function(){
         }
 
      });
-    //$("#answer").click(function(){
-    //    $('#questionWindow').modal('hide');
-    //});
+
 
 
 });
@@ -524,7 +522,7 @@ Game.prototype.checkPlayerCollision = function(isopponent){
 
 
         if (!checkCollision(this.turtle.x, this.turtle.y, this.turtle.height, this.turtle.width, this.walls[i].x, this.walls[i].y, this.walls[i].height, this.walls[i].width)
-        ) {
+         ) {
            // drawElement("player", this.x, this.y, this.angle);
            // console.log(this.turtle.x + "  "+ this.turtle.y+ "  "+ this.turtle.height+ "  "+this.turtle.width+ "  "+this.walls[0].x+ " "this.walls[0].y+ "  "+ this.walls.height);
 
@@ -534,18 +532,24 @@ Game.prototype.checkPlayerCollision = function(isopponent){
         else {
             console.log("COLLISON");
             //there was a collision reset player to previous position
-           // $("div.player").remove();
-           // drawElement("player", this.turtle.previousPosition[0], this.turtle.previousPosition[1], this.turtle.previousPosition[2]);
+
             this.turtle.x = this.turtle.previousPosition[0];
             this.turtle.y = this.turtle.previousPosition[1];
             this.turtle.angle = this.turtle.previousPosition[2];
 
             this.turtle.update();
-            //  console.log(this.x + "  " + this.y + "   " + this.angle)
-            //    console.log(this.walled[i].x+"  "+this.walled[i].y);
+
 
         }
         //   }
+    }
+    //check out of bounds
+    if(this.turtle.x < 0 || this.turtle.x>440 ||this.turtle.y < 0 || this.turtle.y >440){
+        this.turtle.x = this.turtle.previousPosition[0];
+        this.turtle.y = this.turtle.previousPosition[1];
+        this.turtle.angle = this.turtle.previousPosition[2];
+        this.halt = true;
+        this.turtle.update();
     }
 
     ///check is player is at a finish point
@@ -612,12 +616,10 @@ if(multplayercheck == true) {
 Game.prototype.getFinishPoints = function(){
     var finishs =[];
     finishs[0] = new Finish(200,200,false);
-   // finishs[1] = new Finish(440,200,false);
-   // finishs[2] = new Finish(200,440,false);
+
     finishs[1] = new Finish(440,440,true);
     drawElement('finish',finishs[0].x,finishs[0].y,0);
- //   drawElement('finish',finishs[1].x,finishs[1].y,0);
- //   drawElement('finish',finishs[2].x,finishs[2].y,0);
+
     drawElement('finish',finishs[1].x,finishs[1].y,0);
     return finishs;
 };
