@@ -290,7 +290,7 @@ function Player(height,width) {
         //players previous position
         this.previousPosition =[this.x,this.y,this.angle];
 
-    //    console.log(this.walled[0]);
+
 
         this.setup();
 
@@ -323,9 +323,7 @@ Player.prototype.update = function (isopponent) {
 	 $("div.player").remove();
        drawElement("player", this.x, this.y, this.angle);
 	   }
-	   
 
-       // this.sprite.setAttribute('transform', 'rotate(' + (this.angle) + ' 10 10)');
 
 };
 

@@ -3,8 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="f1d19791-9de6-470c-b849-d552bc36b2ab" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.html" afterPath="$PROJECT_DIR$/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/style.css" afterPath="$PROJECT_DIR$/style.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MazeGeneration.js" afterPath="$PROJECT_DIR$/MazeGeneration.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/turtle.js" afterPath="$PROJECT_DIR$/turtle.js" />
     </list>
     <ignored path="maze_game_3yp.iws" />
@@ -27,11 +26,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="MazeGeneration.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="MazeGeneration.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/MazeGeneration.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="30" column="3" selection-start-line="30" selection-start-column="3" selection-end-line="30" selection-end-column="3" />
+            <state vertical-scroll-proportion="-2.2301495">
+              <caret line="3" column="43" selection-start-line="3" selection-start-column="43" selection-end-line="3" selection-end-column="43" />
               <folding />
             </state>
           </provider>
@@ -47,10 +46,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="style.css" pinned="false" current-in-tab="true">
+      <file leaf-file-name="style.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/style.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.65717673">
+            <state vertical-scroll-proportion="-21.307692">
               <caret line="178" column="19" selection-start-line="178" selection-start-column="19" selection-end-line="178" selection-end-column="19" />
               <folding />
             </state>
@@ -70,8 +69,8 @@
       <file leaf-file-name="turtle.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/turtle.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-9.655172">
-              <caret line="269" column="9" selection-start-line="269" selection-start-column="9" selection-end-line="269" selection-end-column="9" />
+            <state vertical-scroll-proportion="223.06897">
+              <caret line="325" column="0" selection-start-line="325" selection-start-column="0" selection-end-line="325" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -150,13 +149,13 @@
         <option value="$PROJECT_DIR$/js.js" />
         <option value="$PROJECT_DIR$/questions.json" />
         <option value="$PROJECT_DIR$/logo.js" />
-        <option value="$PROJECT_DIR$/MazeGeneration.js" />
         <option value="$PROJECT_DIR$/tournemant.html" />
         <option value="$PROJECT_DIR$/Questiongui.html" />
         <option value="$PROJECT_DIR$/practice.html" />
-        <option value="$PROJECT_DIR$/turtle.js" />
         <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/style.css" />
+        <option value="$PROJECT_DIR$/turtle.js" />
+        <option value="$PROJECT_DIR$/MazeGeneration.js" />
       </list>
     </option>
   </component>
@@ -725,12 +724,12 @@
       <workItem from="1461495248617" duration="11764000" />
       <workItem from="1461578250536" duration="219000" />
       <workItem from="1461750358763" duration="706000" />
-      <workItem from="1461775032567" duration="3522000" />
+      <workItem from="1461775032567" duration="3764000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="123294000" />
+    <option name="totallyTimeSpent" value="123536000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1924" height="1056" extended-state="0" />
@@ -1133,14 +1132,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/MazeGeneration.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="30" column="3" selection-start-line="30" selection-start-column="3" selection-end-line="30" selection-end-column="3" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/logo.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1159,14 +1150,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/turtle.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-9.655172">
-          <caret line="269" column="9" selection-start-line="269" selection-start-column="9" selection-end-line="269" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-3.0727272">
@@ -1177,8 +1160,24 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/style.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.65717673">
+        <state vertical-scroll-proportion="-21.307692">
           <caret line="178" column="19" selection-start-line="178" selection-start-column="19" selection-end-line="178" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/turtle.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="223.06897">
+          <caret line="325" column="0" selection-start-line="325" selection-start-column="0" selection-end-line="325" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MazeGeneration.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-2.2301495">
+          <caret line="3" column="43" selection-start-line="3" selection-start-column="43" selection-end-line="3" selection-end-column="43" />
           <folding />
         </state>
       </provider>

@@ -1,5 +1,9 @@
 /**
  * Created by adam on 23-Jan-16.
+ *
+ * got to adamt94.bitbucket.org for testing
+ *
+ *
  */
 
 Math.seed = 0;
@@ -180,6 +184,7 @@ GenerateMaze.prototype.KruskalAlgorithm = function(maze){
     for(var i =0; i<edgesx.length; i++){
         console.log(edgesx[i]);
     }
+    //needs to be changed while there are edges, currently works with 10 iterations though
     for(var c =0; c<10; c++) {
         for (var i = 0; i < edgesx.length; i++) {
             for (var j = 0; j < edgesy.length; j++) {
@@ -206,9 +211,7 @@ GenerateMaze.prototype.KruskalAlgorithm = function(maze){
                     maze[x][y] = maze[x2][y2];
                     maze[pathx][pathy] = 0;
                 }
-                //else if(maze[x2][y2]== this.WALL && maze[x][y] >2){
-                //    maze[x2][y2] = maze[x][y];
-                //}
+
                 else if (maze[x][y] > 2 && maze[x2][y2] > 2 && maze[x][y] !== maze[x2][y2]) {
                     maze[pathx][pathy] = 0;
                     var set = maze[x2][y2];
