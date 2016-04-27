@@ -436,7 +436,7 @@ DelayCommand.prototype.call = function (that) {
 
 //This function contains all objects needed for the game
 function Game(ispractice) {
-     this.seed = 1;
+     this.seed = 8;
     //boolean check for game has started for multiplayer
      this.gameOn = false;
     //check multiplayer
