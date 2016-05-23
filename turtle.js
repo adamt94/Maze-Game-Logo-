@@ -100,7 +100,7 @@ Game.prototype.loadlevel = function(){
 * */
 Game.prototype.drawLevel = function(NE,NW,SE,SW){
      var tempwalls = [];
-
+    $( ".wall" ).remove();
     for( var i = 0 ; i<NW.length; i++)
     {
         //  var length = this.level[i];
@@ -223,6 +223,7 @@ function Question(xpos,ypos){
 
 function getQuestions(){
     var question= [];
+    $(".Question").remove();
     for(var i =0; i<6; i++) {
         var x,y;
         //only adds questions in random sections
@@ -314,7 +315,7 @@ Player.prototype.getState = function(){
 Player.prototype.update = function (isopponent) {
  
   
-    //check is its pratice mode as no walls (needs to be changed moving collision detection to game function soon)
+
 	if(isopponent){
 	  $("div.oponnent").remove();
 		drawElement("oponnent",this.x,this.y,this.angle);
@@ -416,7 +417,7 @@ Player.prototype.setup = function () {
 
     this.x = 0;
     this.y = 0;
-    this.angle = 270;
+    this.angle = 0;
 	this.saveState(this.x,this.y,this.angle);
     this.update();
 
@@ -438,10 +439,15 @@ DelayCommand.prototype.call = function (that) {
 
 
 //This function contains all objects needed for the game
-function Game(ispractice) {
-     this.seed = 8;
+function Game(ispractice, seed) {
+    if(seed == null) {
+        this.seed = 8;
+    }else{
+        this.seed = seed;
+    }
     //boolean check for game has started for multiplayer
      this.gameOn = false;
+    this.gamemode = ispractice;
     //check multiplayer
     if(multplayercheck == true) {
         MazeClient.newSession("multi", "test", this.seed, function (res) {
@@ -515,32 +521,34 @@ function Game(ispractice) {
 
 //this method checks if player collided wit any of the tiles
 Game.prototype.checkPlayerCollision = function(isopponent){
-    for (var i = 0; i < this.walls.length; i++) {
-        //    for (var j = 0; j < this.walled[i].length; j++) {
+
+        for (var i = 0; i < this.walls.length; i++) {
+            //    for (var j = 0; j < this.walled[i].length; j++) {
 
 
-        if (!checkCollision(this.turtle.x, this.turtle.y, this.turtle.height, this.turtle.width, this.walls[i].x, this.walls[i].y, this.walls[i].height, this.walls[i].width)
-         ) {
-           // drawElement("player", this.x, this.y, this.angle);
-           // console.log(this.turtle.x + "  "+ this.turtle.y+ "  "+ this.turtle.height+ "  "+this.turtle.width+ "  "+this.walls[0].x+ " "this.walls[0].y+ "  "+ this.walls.height);
+            if (!checkCollision(this.turtle.x, this.turtle.y, this.turtle.height, this.turtle.width, this.walls[i].x, this.walls[i].y, this.walls[i].height, this.walls[i].width)
+            ) {
+                // drawElement("player", this.x, this.y, this.angle);
+                // console.log(this.turtle.x + "  "+ this.turtle.y+ "  "+ this.turtle.height+ "  "+this.turtle.width+ "  "+this.walls[0].x+ " "this.walls[0].y+ "  "+ this.walls.height);
 
 
+            }
+            //collided with wall
+            else {
+                console.log("COLLISON");
+                //there was a collision reset player to previous position
+
+                this.turtle.x = this.turtle.previousPosition[0];
+                this.turtle.y = this.turtle.previousPosition[1];
+                this.turtle.angle = this.turtle.previousPosition[2];
+
+                this.turtle.update();
+
+
+            }
+            //   }
         }
-        //collided with wall
-        else {
-            console.log("COLLISON");
-            //there was a collision reset player to previous position
 
-            this.turtle.x = this.turtle.previousPosition[0];
-            this.turtle.y = this.turtle.previousPosition[1];
-            this.turtle.angle = this.turtle.previousPosition[2];
-
-            this.turtle.update();
-
-
-        }
-        //   }
-    }
     //check out of bounds
     if(this.turtle.x < 0 || this.turtle.x>440 ||this.turtle.y < 0 || this.turtle.y >440){
         this.turtle.x = this.turtle.previousPosition[0];
@@ -560,14 +568,20 @@ Game.prototype.checkPlayerCollision = function(isopponent){
             if (i == 0) {
                 this.turtle.x = 240;
                 this.turtle.y = 0;
-            }
-            if (i == 2) {
-                this.turtle.x = 0;
-                this.turtle.y = 240;
+                this.turtle.angle = 0;
             }
             if (i == 3) {
                 this.turtle.x = 240;
                 this.turtle.y = 240;
+                this.turtle.angle = 0;
+            }
+            if (i == 2) {
+                this.turtle.x = 0;
+                this.turtle.y = 240;
+                this.turtle.angle = 0;
+            }
+            if(i==1){
+                this.newGameWindow();
             }
             this.turtle.update();
         }
@@ -651,8 +665,9 @@ Game.prototype.paint = function () {
 
                 //call the method
                 fun.call();
-
-                this.checkPlayerCollision(false);
+                if(!this.gamemode) {
+                    this.checkPlayerCollision(false);
+                }
                 redraw = true;
 
             } while (this.speed <= 1 && this.pipeline.length > 0)
@@ -761,6 +776,26 @@ Game.prototype.pollStatus = function() {
 
 };
 
+
+
+Game.prototype.newGame = function(){
+    //reset players position
+    this.turtle.setup();
+};
+
+//opens the new Game window
+Game.prototype.newGameWindow = function(){
+    var a =  Math.seededRandom(2,0);
+    rand = Math.round(a);
+    $("#questiontitle").html(myArray[rand].Question);
+    $('label[for=test1]').html(myArray[rand].fAnswer);
+    $('label[for=test2]').html(myArray[rand].rAnswer);
+    //stops window being dismissed
+    $('#newGameWindow').modal({
+
+    })
+
+};
 
 
 /*QUESTIONS */
