@@ -762,9 +762,12 @@ Game.prototype.pollStatus = function() {
 		console.log(res);
 		if (!this.gameOn && res.result.state == 1) {
 			console.log("game started!");
-
+			$("#code").attr("disabled",null);
 
 			this.gameOn = true;
+		}
+		if(res.result.state == 0 || res.result.state == 2){
+		$("#code").attr("disabled","");
 		}
 		if (res.result.opp !== null) {
 
