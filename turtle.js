@@ -399,7 +399,7 @@ Player.prototype.left = function (angle) {
 
 //converts angle into radians
 Player.prototype.radians = function () {
-    return this.angle / 180 * Math.PI;
+    return (this.angle-90) / 180 * Math.PI;
 }
 
 //reset the player to starting position
@@ -417,7 +417,7 @@ Player.prototype.setup = function () {
 
     this.x = 0;
     this.y = 0;
-    this.angle = 0;
+    this.angle = 90;
 	this.saveState(this.x,this.y,this.angle);
     this.update();
 

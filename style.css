@@ -161,8 +161,9 @@ width: 100%;
   width: 0;
 height: 0;
 border-style: solid;
-border-width: 10px 0 10px 20px;
-border-color: transparent transparent transparent #ff723f;
+border-width:  0 10px 20px 10px;
+border-color: transparent transparent #ff723f transparent;
+
 
     position: absolute;
 }
@@ -171,8 +172,9 @@ border-color: transparent transparent transparent #ff723f;
   width: 0;
 height: 0;
 border-style: solid;
-border-width: 10px 0 10px 20px;
-border-color: transparent transparent transparent #FA5858;
+border-width:  0 10px 20px 10px;
+border-color: transparent transparent #FA5858 transparent;
+
 
     position: absolute;
 }
