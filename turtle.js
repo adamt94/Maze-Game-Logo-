@@ -779,6 +779,7 @@ Game.prototype.pollStatus = function() {
 			$(".modal-title").text("You Lost!");
 		}
 		 this.newGameWindow();
+		}
 	}.bind(this));
 
 	tId = setTimeout(function () {
