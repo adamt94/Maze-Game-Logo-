@@ -55,8 +55,9 @@
             turtle.stop();
 
             var code = form.code.value;
-            oldcode.innerHTML += "\n" + code
-            form.code.value = ""
+            oldcode.innerHTML += "\n" + code;
+			turtle.setCommand(code);
+            form.code.value = "";
 
 
             var out = logo.run(code);
