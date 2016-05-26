@@ -399,6 +399,9 @@ Player.prototype.left = function (angle) {
 
 //converts angle into radians
 Player.prototype.radians = function () {
+if(this.angle <0){
+	this.angle = this.angle +360;
+	}
     return (this.angle-90) / 180 * Math.PI;
 }
 
