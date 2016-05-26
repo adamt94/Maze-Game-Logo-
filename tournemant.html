@@ -30,25 +30,25 @@
 
         var textOutput;
 
-        function init() {
+         function init(seed) {
 
 
-            form = $('#input')[0];
-            textOutput = $("#textOutput")[0];
+                form = $('#input')[0];
+                textOutput = $("#textOutput")[0];
 
-            oldcode = $("#oldcode")[0];
+                oldcode = $("#oldcode")[0];
 
-            setup();
-        }
+                setup(seed);
+            }
 
-        function setup() {
-            logo = new Logo()
+            function setup(seed) {
+                logo = new Logo()
 
 
-            turtle = new Game();
-            logo.setTurtle(turtle);
-            logo.setTextOutput(textOutput);
-        }
+                turtle = new Game(false,seed);
+                logo.setTurtle(turtle);
+                logo.setTextOutput(textOutput);
+            }
 
 
         function run() {
