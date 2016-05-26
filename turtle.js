@@ -383,8 +383,16 @@ Player.prototype.backward = function (d) {
 //method for rotating the player clockwise by a given angle
 Player.prototype.right = function (angle) {
     this.saveState(this.x,this.y,this.angle);
+	
+	if(angle%90!==0 && this.gamemode == false)
+	{
+	 oldcode.innerHTML += "\n" + "error :You can only rotate at 90 degree angles!";
+	}else{
     this.angle = (this.angle + angle) % 360;
+	
+	
     this.update();
+	}
 };
 
 //method for rotating the player anti-clockwise by a given angle
