@@ -605,7 +605,7 @@ Game.prototype.checkPlayerCollision = function(isopponent){
 
 if(multplayercheck == true) {
     if (isopponent !== true) {
-        MazeClient.makeMove({"x": this.turtle.x, "y": this.turtle.y, "d": this.turtle.angle}, "forward", function (x) {
+        MazeClient.makeMove({"x": this.turtle.x, "y": this.turtle.y, "d": this.turtle.angle}, logo.run(code), function (x) {
             if (x['result']['success'] === false) {
                //   drawElement("player", this.previousPosition[0], this.previousPosition[1], this.previousPosition[2]);
             }
