@@ -384,7 +384,7 @@ Player.prototype.backward = function (d) {
 Player.prototype.right = function (angle) {
     this.saveState(this.x,this.y,this.angle);
 	
-	if(angle%90!==0 && turtle.gamemode == true)
+	if(angle%90!==0 && turtle.gamemode == false)
 	{
 	 oldcode.innerHTML += "\n" + "error :You can only rotate at 90 degree angles!";
 	}else{
