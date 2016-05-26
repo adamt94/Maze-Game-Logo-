@@ -771,6 +771,14 @@ Game.prototype.pollStatus = function() {
                         this.opponent.update(true);
 			console.log("updated opponent");
 		}
+		if(res.result.state == 2){
+		
+		 if(this.opponent.x ==440 && this.opponent.y == 440){
+			$(".modal-title").text("You Lost!");
+		}else{
+			$(".modal-title").text("You Lost!");
+		}
+		 this.newGameWindow();
 	}.bind(this));
 
 	tId = setTimeout(function () {
@@ -791,7 +799,8 @@ Game.prototype.newGameWindow = function(){
   
     //stops window being dismissed
     $('#newGameWindow').modal({
-
+		 keyboard: false,
+        backdrop: false,
     })
 
 };
