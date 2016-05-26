@@ -500,6 +500,7 @@ function Game(ispractice, seed) {
     this.halt = false;
     //speed which each command is called
     this.speed = 250;
+	this.command = "";
 
     
 
@@ -517,7 +518,9 @@ function Game(ispractice, seed) {
 
 }
 
-
+Game.prototype.setCommand = function(code){
+this.command = code;
+}
 
 
 
@@ -605,7 +608,7 @@ Game.prototype.checkPlayerCollision = function(isopponent){
 
 if(multplayercheck == true) {
     if (isopponent !== true) {
-        MazeClient.makeMove({"x": this.turtle.x, "y": this.turtle.y, "d": this.turtle.angle}, logo.run(code), function (x) {
+        MazeClient.makeMove({"x": this.turtle.x, "y": this.turtle.y, "d": this.turtle.angle},this.command,  function (x) {
             if (x['result']['success'] === false) {
                //   drawElement("player", this.previousPosition[0], this.previousPosition[1], this.previousPosition[2]);
             }

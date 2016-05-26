@@ -60,7 +60,8 @@ and open the template in the editor.
                 turtle.stop();
 
                 var code = form.code.value;
-                oldcode.innerHTML += "\n" + code
+                oldcode.innerHTML += "\n" + code;
+				turtle.setCommand(code);
                 form.code.value = ""
 
 
