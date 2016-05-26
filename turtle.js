@@ -785,11 +785,7 @@ Game.prototype.newGame = function(){
 
 //opens the new Game window
 Game.prototype.newGameWindow = function(){
-    var a =  Math.seededRandom(2,0);
-    rand = Math.round(a);
-    $("#questiontitle").html(myArray[rand].Question);
-    $('label[for=test1]').html(myArray[rand].fAnswer);
-    $('label[for=test2]').html(myArray[rand].rAnswer);
+  
     //stops window being dismissed
     $('#newGameWindow').modal({
 
