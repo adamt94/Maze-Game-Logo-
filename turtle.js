@@ -520,6 +520,7 @@ function Game(ispractice, seed) {
 
 Game.prototype.setCommand = function(code){
 this.command = code;
+console.log(this.command);
 }
 
 
