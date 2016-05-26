@@ -520,7 +520,7 @@ function Game(ispractice, seed) {
 
 Game.prototype.setCommand = function(code){
 this.command = code;
-console.log(this.command);
+
 }
 
 
@@ -780,7 +780,7 @@ Game.prototype.pollStatus = function() {
 		 if(this.opponent.x ==440 && this.opponent.y == 440){
 			$(".modal-title").text("You Lost!");
 		}else{
-			$(".modal-title").text("You Lost!");
+			$(".modal-title").text("You Won!");
 		}
 		 this.newGameWindow();
 		}
