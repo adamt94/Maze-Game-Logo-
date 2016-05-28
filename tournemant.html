@@ -13,6 +13,7 @@
     <script type="text/javascript" src="turtle.js"></script>
     <script type="text/javascript" src="parser.js"></script>
     <script type="text/javascript" src="logo.js"></script>
+    <script type="text/javascript" src="tournament.js"></script>
 
 
     <!-- Bootstrap Core CSS - Uses Bootswatch Flatly Theme: http://bootswatch.com/flatly/ -->
@@ -30,7 +31,7 @@
 
         var textOutput;
 
-         function init(seed) {
+         function init(seed,gamename) {
 
 
                 form = $('#input')[0];
@@ -38,14 +39,14 @@
 
                 oldcode = $("#oldcode")[0];
 
-                setup(seed);
+                setup(seed,gamename);
             }
 
-            function setup(seed) {
+            function setup(seed,gamename) {
                 logo = new Logo()
 
 
-                turtle = new Game(false,seed);
+                turtle = new Game(false,seed,gamename);
                 logo.setTurtle(turtle);
                 logo.setTextOutput(textOutput);
             }
@@ -138,9 +139,7 @@
     </script>
 </head>
 
-<body onload="init();
-
-            run();">
+<body>
 <!-- Navigation -->
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
@@ -273,6 +272,15 @@
                                             Help
                                         </a>
                                     </div>
+                                    <div id="gamename">
+                                    <div class="form-group has-success">
+                                        <label class="control-label" for="inputSuccess">Enter Game Name</label>
+                                        <input type="text" class="form-control" id="inputSuccess">
+                                    </div>
+                                        <a onClick="loadgame()" class="btn btn-lg btn-outline"   >
+                                            Submit
+                                        </a>
+                                        </div>
 
 
 

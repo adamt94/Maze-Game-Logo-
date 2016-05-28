@@ -450,7 +450,7 @@ DelayCommand.prototype.call = function (that) {
 
 
 //This function contains all objects needed for the game
-function Game(ispractice, seed) {
+function Game(ispractice, seed,gamename) {
     if(seed == null) {
         this.seed = 8;
     }else{
@@ -461,7 +461,7 @@ function Game(ispractice, seed) {
     this.gamemode = ispractice;
     //check multiplayer
     if(multplayercheck == true) {
-        MazeClient.newSession("multi", "test", this.seed, function (res) {
+        MazeClient.newSession("multi", gamename, this.seed, function (res) {
             if (res !== false) {
                 if (res.result.ready !== false) {
                     this.seed = res.result.seed;

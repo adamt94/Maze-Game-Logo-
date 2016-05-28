@@ -126,6 +126,18 @@ and open the template in the editor.
 
 
 }
+#gamename{
+    overflow: hidden;
+    text-align: left;
+    margin-right: auto;
+    margin-left: auto;
+    width: 90%;
+    margin-top: 25px;
+
+
+
+}
+
 #code {
 
 width: 100%;
