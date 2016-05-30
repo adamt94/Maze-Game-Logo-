@@ -18,7 +18,7 @@ function GenerateMaze(height, width,seed){
     this.data = this.Generate(this.width, this.height); //setup maze data NE
     this.data2 = this.Generate(this.width,this.height);//setup maze data NW
     this.data3 = this.Generate(this.width, this.height); //setup maze data SE
-    this.data4 = this.Generate(this.width,this.height);//setup maze data SW
+    this.data4 = this.Generate(14,14);//setup maze data SW
 
     //RECURSIVE BACKTRACKER
     this.data[1][1] = this.SPACE; //starting point
@@ -79,13 +79,13 @@ GenerateMaze.prototype.Generate = function(width ,height){
     //fill border right column
     for(var x = 0; x < width; x++) {
         maze[x][0] = 2;
-        maze[x][this.height - 1] = 2;
+        maze[x][height - 1] = 2;
     }
 
     //fill border bottom row
     for(var y = 0; y < height; y++) {
         maze[0][y] = 2;
-        maze[this.width - 1][y] = 2;
+        maze[width - 1][y] = 2;
     }
 
 
@@ -143,6 +143,8 @@ GenerateMaze.prototype.Carve = function(x,y,maze){
 
 
     }
+
+
     return maze;
 
 };
@@ -198,8 +200,7 @@ GenerateMaze.prototype.KruskalAlgorithm = function(maze){
 
                 var pathx = edgesx[i] + directionsX2[dir];
                 var pathy = edgesy[j] + directionsY2[dir];
-              //  console.log("x:  " + x +"  "+ y);
-              //  console.log("p:  " + pathx +"  "+ pathy);
+                try{
                 if (maze[x][y] == this.WALL && maze[x2][y2] == this.WALL) {
                     maze[x][y] = sets;
                     maze[pathx][pathy] = 0;
@@ -222,6 +223,8 @@ GenerateMaze.prototype.KruskalAlgorithm = function(maze){
                             }
                         }
                     }
+                }
+                }catch(err){
                 }
             }
         }

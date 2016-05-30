@@ -182,8 +182,9 @@ Game.prototype.drawLevel = function(NE,NW,SE,SW){
             for (var j = 0; j < SE[0].length; j++) {
                 //check if int is 1 for a wall
                 if (SE[i][j]== 1) {
-                    var xbounds = (((SE.length-1)*20 + (j * 20)) - 20);
-                    var ybounds = ((SE[0].length-1)*20  + (i * 20)) - 20;
+                    //220 is starting position to draw at
+                    var xbounds = ((220 + (j * 20)) - 20);
+                    var ybounds = (220 + (i * 20)) - 20;
                     if (xbounds < this.gameWidth && ybounds < this.gameHeight) {
 
                     //creates a wall in x y position (-20 to adjust for padding)
@@ -452,7 +453,7 @@ DelayCommand.prototype.call = function (that) {
 //This function contains all objects needed for the game
 function Game(ispractice, seed,gamename) {
     if(seed == null) {
-        this.seed = 8;
+        this.seed = 19;
     }else{
         this.seed = seed;
     }
@@ -487,7 +488,7 @@ function Game(ispractice, seed,gamename) {
         this.NEmaze = this.loadlevel();
         this.NWmaze = maze.data;
         this.SWmaze = this.loadlevel();
-        this.SEmaze = maze.data3;
+        this.SEmaze = maze.data4;
         //finish points data
         this.endPoints = this.getFinishPoints();
         //   this.level = this.loadlevel();
