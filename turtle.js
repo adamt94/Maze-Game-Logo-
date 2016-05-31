@@ -344,9 +344,9 @@ Player.prototype.setx = function (x) {
     this.update();
 };
 //set the player y position
-Player.prototype.sety = function (x, y) {
+Player.prototype.sety = function (y) {
 
-    this.x = x;
+    this.y = y;
     this.update();
 };
 
@@ -453,7 +453,7 @@ DelayCommand.prototype.call = function (that) {
 //This function contains all objects needed for the game
 function Game(ispractice, seed,gamename) {
     if(seed == null) {
-        this.seed = 19;
+        this.seed = 2;
     }else{
         this.seed = seed;
     }
@@ -643,6 +643,7 @@ if(multplayercheck == true) {
 
 Game.prototype.getFinishPoints = function(){
     var finishs =[];
+    $(".finish").remove();
     finishs[0] = new Finish(200,200,false);
 
     finishs[1] = new Finish(440,440,true);
@@ -830,17 +831,17 @@ Game.prototype.newGameWindow = function(){
 var myArray = [
     {
         "Question": "What is 2+2?",
-        "fAnswer": "1",
-        "rAnswer": "2"
+        "fAnswer": "3",
+        "rAnswer": "4"
     },
     {
-        "Question": "What is 24+2?",
-        "fAnswer": "1",
-        "rAnswer": "26"
+        "Question": "What is 2*7?",
+        "fAnswer": "13",
+        "rAnswer": "14"
     },
     {
-        "Question": "What is 2231+2?",
+        "Question": "What is 2231+3?",
         "rAnswer": "2233",
-        "fAnswer": "2"
+        "fAnswer": "2234"
     }
 ];
